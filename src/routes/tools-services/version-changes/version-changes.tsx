@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import ChangeLog from "../../../../CHANGELOG.md?url";
 import MarkdownIt from "markdown-it";
 import HighlightJs from "highlight.js";
+import { Skeleton } from "antd";
 const VersionChanges = () => {
     const [mdText, setMdText] = useState("");
+    const [active, setActive] = useState(true);
     useEffect(() => {
         fetch(ChangeLog)
             .then((res) => res.text())
@@ -46,10 +48,12 @@ const VersionChanges = () => {
                 });
                 const htmlText = md.render(x);
                 setMdText(htmlText);
+                setActive(false);
             });
     }, []);
     return (
-        <section className={"bg-white"}>
+        <section className={"bg-white h-full overflow-auto"}>
+            {active && <Skeleton active />}
             <p
                 className={"nsp-markdown"}
                 dangerouslySetInnerHTML={{ __html: mdText }}
