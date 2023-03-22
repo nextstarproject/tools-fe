@@ -1,5 +1,7 @@
 export const ProjectName = _PROJECT_NAMESPACE_;
 export const AccessTokenKey = "api-access-token";
+
+export const CookieReadKey = "cookie-read-key";
 export const enum HttpStatusCode {
     OK = 200,
     Created = 201,

@@ -1,5 +1,13 @@
 import React, { useEffect } from "react";
-import { Layout, Spin, Typography, theme } from "antd";
+import {
+    Layout,
+    Spin,
+    Typography,
+    theme,
+    Button,
+    Space,
+    notification,
+} from "antd";
 
 import { matchPath, Outlet, useLocation } from "react-router-dom";
 import BreadcrumbSub from "./components/breadcrumb-sub";
@@ -25,6 +33,8 @@ import {
     selectGlobalFirstRender,
     selectGlobalLoading,
 } from "@project-self/selector/selector";
+import { nsLocalStorage } from "@project-self/utils/storgae";
+import { CookieReadKey } from "@project-self/assets/consts";
 
 const { Header, Content } = Layout;
 const { useToken } = theme;
@@ -62,18 +72,53 @@ const LayoutIndex = () => {
     const isLoading = useSelector(selectGlobalLoading);
     const canVisit = determinePermission(permissions, location.pathname);
     const isFirstRender = useAppSelector(selectGlobalFirstRender);
+    const [api, contextHolder] = notification.useNotification();
+    const openNotification = () => {
+        const key = `open${Date.now()}`;
+        const btn = (
+            <Space>
+                <Button
+                    type="primary"
+                    size="small"
+                    onClick={() => {
+                        nsLocalStorage.set(CookieReadKey, "true");
+                        api.destroy(key);
+                    }}
+                >
+                    知道了
+                </Button>
+            </Space>
+        );
+        api.open({
+            message: "分析代码",
+            description:
+                "本站使用了 google 和 百度统计 分析代码，用于追踪用户使用情况.",
+            btn,
+            key,
+            duration: 10,
+            placement: "bottomLeft",
+            onClose: () => api.destroy(key),
+        });
+    };
+
     useEffect(() => {
         const initAllApi = async function () {
             await dispatch(getMenus());
             await dispatch(IncreasesRender());
             await dispatch(getPermissions());
             await dispatch(IncreasesRender());
+
+            const isRead = nsLocalStorage.get(CookieReadKey);
+            if (!isRead) {
+                openNotification();
+            }
         };
         initAllApi();
     }, []);
 
     return (
         <>
+            {contextHolder}
             {isLoading && <GlobalLoading />}
             <Layout className="w-full h-full overflow-hidden flex">
                 <Header
