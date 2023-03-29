@@ -1,0 +1,14 @@
+.logo-wrapper{
+  display: flex;
+  width: 160px;
+  height: 36px;
+  justify-content: center;
+  transition: all 0.5s;
+  border-radius: 4px;
+  background-color: rgb(241 245 249);
+  cursor: pointer;
+  &:hover{
+    border-radius: 8px;
+    background-color: rgb(226 232 240);
+  }
+}

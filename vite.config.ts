@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { visualizer } from "rollup-plugin-visualizer";
+import svgr from "vite-plugin-svgr";
 
 const now = new Date();
 
@@ -21,11 +22,19 @@ export default function ({ mode }) {
                 filename: "dist/visualizer.html",
                 open: false,
             }),
+            svgr(),
         ],
         optimizeDeps: {
             include: ["react/jsx-runtime"],
         },
         css: {
+            // config: https://github.com/webpack-contrib/css-loader
+            modules: {
+                generateScopedName: isDev
+                    ? "nsp_[path][name]_[local]_[hash:base64:10]"
+                    : "nsp_[hash:base64:16]",
+                localsConvention: "camelCaseOnly",
+            },
             preprocessorOptions: {
                 less: {
                     javascriptEnabled: false,
