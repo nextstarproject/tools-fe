@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { toggleLoading } from "@project-self/layout/rkt";
 import { useAppSelector } from "@project-self/hooks/useAppDispatch";
 import { selectLayoutMenuStatus } from "@project-self/layout/selector";
-import { ReactComponent as NextStarLogo } from "../../assets/nextstar_logo.svg";
+import { ReactComponent as NextStarLogo } from "../../assets/ns-logo.svg";
 import styles from "../styles/left-header.module.scss";
 import { useNavigate } from "react-router-dom";
 
