@@ -1,0 +1,63 @@
+name: PULL REQUEST PREVIEW
+
+on:
+  pull_request:
+    branches:
+      - "master" # match main branch
+      - "dev" # match developer branch
+      - "release/**" # matches release branch
+    types:
+      - opened
+      - edited
+      - reopened
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: preview deploy pr
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+        env:
+          CI: true
+          PROGRESS: none
+          NODE_ENV: test
+          NODE_OPTIONS: --max_old_space_size=4096
+      - name: pnpm install
+        run: |
+          echo ${{github.ref}}
+          pnpm install
+      - name: Build
+        run: |
+          echo ${{github.workspace}}
+          pnpm build
+      - name: Deploy to Netlify
+        id: netlify
+        uses: nwtgck/actions-netlify@v2.0.0
+        with:
+          publish-dir: "apps/tools-site/dist"
+          production-deploy: false
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          enable-commit-status: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            🚀 Deploy on ${{ steps.netlify.outputs.deploy-url }}
