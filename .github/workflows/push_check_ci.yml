@@ -2,14 +2,14 @@ name: PUSH CHECK CI
 
 on:
   push:
-    branches:
+    branches-ignore:
       - "master" # match main branch
       - "dev" # match developer branch
       - "release/*" # matches release branch
+    branches:
       - "feature/*" # matches feature branch
       - "bugfix/*" # matches bugfix branch
       - "hotfix/*" # matches hotfix branch
-      - "35-new-version" # temp match
 
 permissions:
   contents: write
