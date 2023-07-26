@@ -3,9 +3,6 @@ name: PUSH CHECK CI
 on:
   push:
     branches:
-      - "!master" # match main branch
-      - "!dev" # match developer branch
-      - "!release/*" # matches release branch
       - "feature/*" # matches feature branch
       - "bugfix/*" # matches bugfix branch
       - "hotfix/*" # matches hotfix branch
