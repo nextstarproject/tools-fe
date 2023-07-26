@@ -1,4 +1,5 @@
 {
+	"version": "2.0.0",
 	"scripts": {
 		"prepare": "pnpm husky install",
 		"lint": "pnpm --filter './apps/**' --filter './packages/**' lint",

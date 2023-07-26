@@ -1,0 +1,24 @@
+name: 🔀 Sync mirror to Bitbucket
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    if: github.repository == 'nextstarproject/tools-fe'
+    steps:
+      - name: mirror
+        continue-on-error: true
+        uses: wearerequired/git-mirror-action@v1
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.BITBUCKET_ACCESS_MIRROR_SYNC }}
+        with:
+          source-repo: "git@github.com:nextstarproject/tools-fe.git"
+          destination-repo: ${{secrets.BITBUCKET_TOOL_FE_GIT}}

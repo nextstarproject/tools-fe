@@ -1,9 +1,6 @@
 name: REALEASE
 
-on:
-  push:
-    tags:
-      - "v*.*.*"
+on: workflow_dispatch
 
 permissions:
   contents: write
@@ -15,6 +12,9 @@ jobs:
     name: production deploy
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
@@ -55,11 +55,15 @@ jobs:
           files: |
             ./apps/tools-site/dist
           outPath: tools-site.tar.gz
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          name: ${{github.ref_name}}
-          tag_name: ${{github.ref_name}}
-          body_path: ./apps/tools-site/changelogs/${{github.ref_name}}.md
+          token: ${{github.token}}
+          name: v${{ steps.package-version.outputs.current-version}}
+          tag_name: v${{ steps.package-version.outputs.current-version}}
+          body_path: ./apps/tools-site/changelogs/v${{ steps.package-version.outputs.current-version}}.md
           discussion_category_name: Release
           files: tools-site.tar.gz
