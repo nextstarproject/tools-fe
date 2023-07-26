@@ -1,0 +1,41 @@
+{
+  "name": "nsp-utils",
+  "private": true,
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prettier": "prettier -c --write \\\"src/**/*\\\"",
+    "tsc": "tsc --noEmit --skipLibCheck --incremental",
+    "lint": "eslint --ext .jsx,.js,.tsx,.ts src/**/*",
+    "lint:error": "eslint --quiet --ext .jsx,.js,.tsx,.ts src/**/*",
+    "clean": "rimraf .turbo && rimraf node_modules && rimraf dist && rimraf docs && rimraf wiki",
+    "docs": "typedoc",
+    "wiki": "typedoc --options typedoc.wiki.json --plugin typedoc-plugin-markdown --plugin typedoc-github-wiki-theme"
+  },
+  "devDependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/lodash": "^4.14.195",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "axios": "^1.4.0",
+    "lodash": "^4.17.21",
+    "nsp-lint": "workspace:^",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typedoc": "^0.24.8",
+    "typedoc-github-wiki-theme": "^1.1.0",
+    "typedoc-plugin-markdown": "^3.15.3",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.4"
+  },
+  "dependencies": {
+    "store2": "^2.14.2"
+  }
+}

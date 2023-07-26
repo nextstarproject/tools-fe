@@ -1,0 +1,23 @@
+{
+  "name": "nsp-i18n",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "i18next": "^23.2.11",
+    "react": "^18.2.0",
+    "react-i18next": "^13.0.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "i18next-parser": "^8.3.0"
+  }
+}

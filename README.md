@@ -1,16 +1,51 @@
-# NextStar Tools
+# README
 
-<div align="center">
-<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo." style="width: 200px;">
-</div>
+## Folder structure
 
-纯前端在线工具
+Folder structure.
+- apps: holds all project levels
+- configs: holds common configurations, which can be introduced directly into the project
+- packages: Common project toolkit
+- components: common UI libraries, etc.
 
-实现功能：
+### Start the project
 
-- [x] HMAC
-- [x] 单项加密
-- [x] 生成随机字符串
-- [x] 生成Guid
-- [ ] 代码格式化
-- [ ] markdown在线解析
+Go to the project folder `project/**` and use `cmd` to run the `pnpm run dev` command to start the specified project.
+
+### Upgrade dependencies
+
+```shell
+pnpm up --filter "./apps/**"
+```
+
+to upgrade all packages under `projects`
+
+### Lint all project
+
+```shell
+pnpm --filter "./apps/**" --filter "./packages/**" lint:error
+```
+
+### tsc all project
+
+```shell
+pnpm --filter "./apps/**" --filter "./packages/**" tsc
+```
+
+### Build all project
+
+```shell
+pnpm --filter "./apps/**" --filter "./packages/**" build
+```
+
+### Skip pre-commit
+
+```shell
+git commit -n -m "some message"
+```
+
+### Uninstall husky
+
+```shell
+npm uninstall husky && git config --unset core.hooksPath
+```

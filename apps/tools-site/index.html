@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/ns-ico.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title lang="en-US">NextStar Tools</title>
+		<title lang="zh-CN">次星工具</title>
+		<meta name="description" content="Online pure front end tools" />
+		<meta name="author" content="NextStarProject" />
+		<meta name="description" lang="zh" content="一个纯前端的工具网站" />
+		<meta name="copyright" content="https://github.com/nextstarproject" />
+		<meta name="robots" content="index, follow" />
+	</head>
+	<body>
+		<div id="root"></div>
+		<script src="/config.js"></script>
+		<script type="module" src="/src/main.tsx"></script>
+		<!--  共通脚本  -->
+		<script>
+			window._LANGUAGE_ =
+				window.navigator.language || window.navigator.userLanguage || "zh-CN";
+			if (_LANGUAGE_ !== "zh-CN" && _LANGUAGE_ !== "en-US") {
+				_LANGUAGE_ = "zh-CN";
+			}
+		</script>
+		<!--  icon font  -->
+		<script>
+			(function () {
+				var iconfont = document.createElement("script");
+				iconfont.src = window._ICON_FONT_URL_;
+				var s = document.getElementsByTagName("body")[0];
+				s.appendChild(iconfont);
+			})();
+		</script>
+		<!--  icon park  -->
+		<script>
+			(function () {
+				var iconpark = document.createElement("script");
+				iconpark.src = window._ICON_PARK_URL_;
+				var s = document.getElementsByTagName("body")[0];
+				s.appendChild(iconpark);
+			})();
+		</script>
+
+		<!--  百度统计  -->
+		<script>
+			var isBaiduCount = "%NSP_BAIDU_COUNT%";
+			if (isBaiduCount === "true") {
+				var _hmt = _hmt || [];
+				if (window._BAIDU_COUNT_ !== "") {
+					(function () {
+						var hm = document.createElement("script");
+						hm.src = "https://hm.baidu.com/hm.js?" + window._BAIDU_COUNT_;
+						var s = document.getElementsByTagName("body")[0];
+						s.appendChild(hm);
+					})();
+				}
+			}
+		</script>
+
+		<!-- Google tag (gtag.js) -->
+		<script>
+			var isGoogleTag = "%NSP_GOOGLE_TAG%";
+
+			if (isGoogleTag === "true") {
+				if (window._GOOGLE_TAG_ !== "") {
+					(function () {
+						var gtag = document.createElement("script");
+						gtag.src =
+							"https://www.googletagmanager.com/gtag/js?id=" + window._GOOGLE_TAG_;
+						var s = document.getElementsByTagName("body")[0];
+						s.appendChild(gtag);
+					})();
+				}
+
+				window.dataLayer = window.dataLayer || [];
+				if (window._GOOGLE_TAG_ !== "") {
+					window._googleTag = function () {
+						dataLayer.push(arguments);
+					};
+					_googleTag("js", new Date());
+
+					_googleTag("config", window._GOOGLE_TAG_);
+				}
+			}
+		</script>
+	</body>
+</html>

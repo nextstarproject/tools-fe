@@ -1,0 +1,9 @@
+packages:
+    - "packages/*"
+    # all project and website in direct subdirs of apps/
+    - "apps/*"
+    # all packages in subdirs of components/
+    - "components/**"
+    - "configs/**"
+    # exclude packages that are inside test directories
+    - "!**/test/**"

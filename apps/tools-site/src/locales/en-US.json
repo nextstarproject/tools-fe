@@ -1,0 +1,111 @@
+{
+  "COMMON": {
+    "Cancel": "Cancel",
+    "LANGUAGE": "中文",
+    "LANGUAGE_EMOJI": "🇨🇳 中文",
+    "LOADING_TEXT": "Loading...",
+    "Ok": "OK",
+    "SITE_NAME": "NextStar Tools",
+    "WikiPedia": "WikiPedia",
+    "NotFound": "Sorry, the page you visited does not exist.",
+    "BackHome": "Back Home"
+  },
+  "Site": {
+    "CookieAccept": "Accept",
+    "CookieDescription": "We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information that you’ve provided to them or that they’ve collected from your use of their services.",
+    "CookieNextTime": "Next time",
+    "CookieTitle": "This website uses cookies"
+  },
+  "Route": {
+    "Contributors": "Contributors",
+    "Dashboard": "Dashboard",
+    "Hmac": "HMAC",
+    "OneWayEncryption": "One Way Encryption",
+    "RandomString": "Random String",
+    "RsaGenerate": "RSA Generate",
+    "RsaUse": "RSA Use",
+    "TagDetail": "标签详情",
+    "Tags": "标签",
+    "UUID": "UUID",
+    "Color": "Color"
+  },
+  "Layout": {
+    "Application": {
+      "JumpLinkTo": "Jump link to",
+      "SiteOther": "NextStar other site"
+    },
+    "DayTheme": "Day theme",
+    "NightTheme": "Night theme",
+    "ThemeGlobalSetting": "Global Configuration",
+    "ThemeSettingDrawerDarkTheme": "Night Themes",
+    "ThemeSettingDrawerEnableDarkTheme": "Enable night theme",
+    "ThemeSettingDrawerSelectLanguage": "Language Selection",
+    "ThemeSettingDrawerSelectTheme": "Theme Selection",
+    "ThemeSettingDrawerText1": "This is only shown in the development environment, quick operation, in the official environment will be possible to move to personal settings or other places, please user self-determination!",
+    "ThemeSettingDrawerText2": "If you want to fix the style, please change the default global state.",
+    "VersionInfo": "Version Info"
+  },
+  "OneWayEncryption": {
+    "AutoUpdate": "Auto Update",
+    "CipherText": "Cipher Text",
+    "FormatError": "Format error",
+    "InputType": "Input type",
+    "Md5": {
+      "Description": "The MD5 message-digest algorithm is a widely used hash function producing a 128-bit hash value. MD5 was designed by Ronald Rivest in 1991 to replace an earlier hash function MD4, and was specified in 1992 as RFC 1321.",
+      "Link": "https://en.wikipedia.org/wiki/MD5"
+    },
+    "OriginText": "Origin Text",
+    "Output": "Output",
+    "OutputLength": "Output length",
+    "OutputType": "Output type",
+    "Sha1": {
+      "Description": "In cryptography, SHA-1 (Secure Hash Algorithm 1) is a hash function which takes an input and produces a 160-bit (20-byte) hash value known as a message digest – typically rendered as 40 hexadecimal digits. It was designed by the United States National Security Agency, and is a U.S. Federal Information Processing Standard.The algorithm has been cryptographically broken but is still widely used.",
+      "Link": "https://en.wikipedia.org/wiki/SHA-1"
+    },
+    "Sha2": {
+      "Description": "SHA-2 (Secure Hash Algorithm 2) is a set of cryptographic hash functions designed by the United States National Security Agency (NSA) and first published in 2001. They are built using the Merkle–Damgård construction, from a one-way compression function itself built using the Davies–Meyer structure from a specialized block cipher. The SHA-2 family consists of six hash functions with digests (hash values) that are 224, 256, 384 or 512 bits",
+      "Link": "https://en.wikipedia.org/wiki/SHA-2"
+    },
+    "Sha3": {
+      "Description": "HA-3 (Secure Hash Algorithm 3) is the latest member of the Secure Hash Algorithm family of standards, released by NIST on August 5, 2015.Although part of the same series of standards, SHA-3 is internally different from the MD5-like structure of SHA-1 and SHA-2.",
+      "Link": "https://en.wikipedia.org/wiki/SHA-3"
+    }
+  },
+  "HMAC": {
+    "Description": "In cryptography, an HMAC (sometimes expanded as either keyed-hash message authentication code or hash-based message authentication code) is a specific type of message authentication code (MAC) involving a cryptographic hash function and a secret cryptographic key. As with any MAC, it may be used to simultaneously verify both the data integrity and authenticity of a message.",
+    "Link": "https://en.wikipedia.org/wiki/HMAC"
+  },
+  "RSA": {
+    "GenerateDigits": "Digits",
+    "GenerateError": "RSA generate error",
+    "GenerateHere": "Here",
+    "GenerateIng": "generate...",
+    "GeneratePrivateKey": "Private Key",
+    "GeneratePublicKey": "Public Key",
+    "GenerateSlideSelect": "Please slide to select the number of digits",
+    "GenerateTips": "This is only used to generate RSA asymmetric encryption keys, for specific encryption and decryption go to the",
+    "GenerateToolTips": "Generation time is long when the number of bits is too large and may jam the viewer",
+    "GenerateTwoKeys": "Generate public and private keys",
+    "UseCipherText": "Cipher Text",
+    "UseDecrypt": "Decrypt",
+    "UseDecryptError": "RSA decrypt error",
+    "UseEncrypt": "Encrypt",
+    "UseEncryptError": "RSA encrypt error",
+    "UsePlainText": "Plain Text"
+  },
+  "RandomString": {
+    "Chars": "Chars",
+    "FormatComposition": "Format Composition",
+    "GenerateAction": "Generate",
+    "GenerateLength": "Generate Length",
+    "GenerateNumber": "Generate Number",
+    "UseRandom": "Use Math Random"
+  },
+  "UUID": {
+    "GenerateAction": "Generate",
+    "GenerateNumber": "Generate Number",
+    "Uppercase": "Uppercase",
+    "Braces": "Braces",
+    "NoHyphens": "No Hyphens"
+  }
+}
