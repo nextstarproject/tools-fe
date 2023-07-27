@@ -19,6 +19,7 @@
     "@ant-design/icons": "^5.1.4",
     "@ant-design/pro-components": "^2.6.5",
     "@fingerprintjs/fingerprintjs": "^3.4.2",
+    "@monaco-editor/react": "^4.5.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@sentry/browser": "^7.58.1",
     "@sentry/react": "^7.58.1",

@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { visualizer } from "rollup-plugin-visualizer";
 import svgr from "vite-plugin-svgr";
+import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
 
 const now = new Date();
 
