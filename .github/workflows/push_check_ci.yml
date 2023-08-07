@@ -6,6 +6,8 @@ on:
       - "feature/*" # matches feature branch
       - "bugfix/*" # matches bugfix branch
       - "hotfix/*" # matches hotfix branch
+      - "dev" # matches hotfix branch
+      - "master" # matches hotfix branch
 
 permissions:
   contents: write
