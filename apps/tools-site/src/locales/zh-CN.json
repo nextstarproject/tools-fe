@@ -27,7 +27,8 @@
     "TagDetail": "标签详情",
     "Tags": "标签",
     "UUID": "UUID",
-    "Color": "颜色"
+    "Color": "颜色",
+    "Markdown": "Markdown"
   },
   "Layout": {
     "Application": {
