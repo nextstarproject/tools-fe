@@ -1,10 +1,12 @@
 name: 🔀 Sync mirror to Bitbucket
 
 on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 6 8 * *"
   push:
     tags:
       - "v*.*.*"
-  workflow_dispatch:
 
 permissions:
   contents: read

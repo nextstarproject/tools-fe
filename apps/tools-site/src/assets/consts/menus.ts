@@ -138,6 +138,18 @@ export const BusinessMenus: MenuItem[] = [
 				permission: null,
 				children: null,
 			},
+			{
+				id: 100302,
+				name: "Menu.Unclassified.Markdown",
+				i18n: {
+					"zh-CN": "Markdown",
+					"en-US": "Markdown",
+				},
+				icon: "nsp-file-common",
+				path: "/unclassified/markdown",
+				permission: null,
+				children: null,
+			},
 		],
 	},
 ];
