@@ -54,6 +54,7 @@ export default function ({ mode }) {
 					.padStart(2, "0")}`
 			),
 			_IS_DEV_: isDev,
+			_WHITE_DOMAIN_: JSON.stringify("tools.nextstar.space"),
 		},
 		server: {
 			port: 14001,

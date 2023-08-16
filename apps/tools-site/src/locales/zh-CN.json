@@ -14,7 +14,9 @@
     "CookieAccept": "接受",
     "CookieDescription": "我们使用 cookie 来个性化内容和广告，提供社交媒体功能，并分析我们的流量。我们还与我们的社交媒体、广告和分析合作伙伴共享有关您使用我们网站的信息，这些合作伙伴可能会将这些信息与您提供给他们的其他信息或他们从您使用其服务中收集的信息结合起来。",
     "CookieNextTime": "下次再说",
-    "CookieTitle": "本网站使用 cookie"
+    "CookieTitle": "本网站使用 cookie",
+    "Hint": "提示",
+    "DomainHint": "当前站点已不在官方Host下，点击前往新站点。"
   },
   "Route": {
     "Contributors": "贡献者",

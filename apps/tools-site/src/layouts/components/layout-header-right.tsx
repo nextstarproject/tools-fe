@@ -1,13 +1,14 @@
 import { Button, Dropdown, MenuProps, Modal, Space, Tooltip } from "antd";
 import { GithubOutlined, GlobalOutlined, TranslationOutlined } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "@project-self/store/store";
-import { selectGlobalState } from "@project-self/store/selector";
+import { selectGlobalState, selectLayoutState } from "@project-self/store/selector";
 import { setLanguage, setThemeDark } from "@project-self/rtk/global-slice";
 import { Languages, useTranslation } from "nsp-i18n";
 import { setSettingDrawer } from "../rtk/layout-slice";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { DynamicAntIcon } from "@project-self/components/dynamic-icon/dynamic-icon";
 import { AHrefRelAllNo } from "@project-self/assets/consts/html-tag-consts";
+import { getReleasesLatest } from "../rtk/service";
 
 /**
  * @description 语言下拉菜单
@@ -30,7 +31,15 @@ const LanguageDropdownMenus: MenuProps["items"] = [
 const LayoutHeaderRight = () => {
 	const { t } = useTranslation();
 	const globalState = useAppSelector(selectGlobalState);
+	const layoutState = useAppSelector(selectLayoutState);
 	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		const init = async () => {
+			await dispatch(getReleasesLatest());
+		};
+		init();
+	}, [dispatch]);
 
 	const handleLanguageMenuClick = useCallback(
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -43,18 +52,30 @@ const LayoutHeaderRight = () => {
 		[globalState.language, dispatch]
 	);
 
-	const handleClickVersion = useCallback(() => {
+	const handleClickVersion = useCallback(async () => {
+		const newVersion = layoutState.latest?.tag_name;
+		let version = <></>;
+		const current = `v${_MAIN_VERSION_}`;
+		if (newVersion != undefined && newVersion != current) {
+			version = (
+				<span>
+					v{_MAIN_VERSION_} <span className={"text-red-500"}>(latest {newVersion})</span>
+				</span>
+			);
+		} else {
+			version = <span>v{_MAIN_VERSION_}</span>;
+		}
 		Modal.info({
 			title: t("Layout.VersionInfo"),
 			content: (
 				<div>
 					<p>
-						v{_MAIN_VERSION_} {_BUILD_VERSION_}
+						{version} {_BUILD_VERSION_}
 					</p>
 				</div>
 			),
 		});
-	}, [t]);
+	}, [layoutState.latest?.tag_name, t]);
 
 	return (
 		<div className={"flex flex-row items-center flex-1 justify-end h-full"}>
@@ -102,7 +123,12 @@ const LayoutHeaderRight = () => {
 					target={"_blank"}
 					rel={AHrefRelAllNo}
 				/>
-				<Button icon={<DynamicAntIcon type="nsp-about" />} onClick={handleClickVersion} />
+				<Tooltip placement="bottom" title={t("Layout.VersionInfo")}>
+					<Button
+						icon={<DynamicAntIcon type="nsp-about" />}
+						onClick={handleClickVersion}
+					/>
+				</Tooltip>
 			</Space>
 		</div>
 	);
