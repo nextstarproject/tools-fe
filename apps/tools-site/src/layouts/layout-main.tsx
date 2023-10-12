@@ -14,6 +14,7 @@ import { useBoolean } from "ahooks";
 import GlobalLoading from "@project-self/components/global-loading/global-loading";
 import LayoutFooter from "./components/layout-footer";
 import { nsLocalStorage } from "@project-self/utils/storage";
+import { isDev } from "@project-self/utils/env-detect";
 
 export interface INotificationProps {
 	title: string;
@@ -77,6 +78,8 @@ const LayoutMain = () => {
 		},
 		[notificationApi, t]
 	);
+
+	// cookie 隐私提示
 	const cookieTips = useCallback(() => {
 		const isAccept = nsLocalStorage.get("site.cookie");
 		if (isAccept != "true") {
@@ -93,6 +96,25 @@ const LayoutMain = () => {
 		}
 	}, [openSystemTipsNotification, t]);
 
+	// 域名不正确提示a
+	const domain = useCallback(() => {
+		if (!isDev) {
+			const host = window.location.hostname;
+			if (host != _WHITE_DOMAIN_) {
+				openSystemTipsNotification({
+					title: t("Site.Hint"),
+					description: t("Site.DomainHint"),
+					cancelText: t("Site.CookieNextTime"),
+					okText: "GO",
+					duration: null,
+					okHandle: () => {
+						window.location.href = `https://${_WHITE_DOMAIN_}${window.location.pathname}`;
+					},
+				});
+			}
+		}
+	}, [openSystemTipsNotification, t]);
+
 	useEffect(() => {
 		document.title = t("COMMON.SITE_NAME");
 	}, [globalState.language, t]);
@@ -102,6 +124,7 @@ const LayoutMain = () => {
 			await setTimeout(() => {
 				setPrepare.setFalse();
 				cookieTips();
+				domain();
 			}, 300);
 		};
 		init();

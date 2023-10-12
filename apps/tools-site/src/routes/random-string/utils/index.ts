@@ -71,13 +71,13 @@ export const CryptoRandomString = (options: ICryptoRandomStringOptions): string 
 
 	if (type === RandomStringType.Distinguishable) {
 		return GenerateForCustomCharacters(length, [
-			...CryptoRandomStringCharacters.alphanumericCharacters,
+			...CryptoRandomStringCharacters.distinguishableCharacters,
 		]);
 	}
 
 	if (type === RandomStringType.AsciiPrintable) {
 		return GenerateForCustomCharacters(length, [
-			...CryptoRandomStringCharacters.alphanumericCharacters,
+			...CryptoRandomStringCharacters.asciiPrintableCharacters,
 		]);
 	}
 
@@ -114,13 +114,13 @@ export const RandomString = (options: ICryptoRandomStringOptions): string => {
 
 	if (type === RandomStringType.Distinguishable) {
 		return GenerateForNumberRandom(length, [
-			...CryptoRandomStringCharacters.alphanumericCharacters,
+			...CryptoRandomStringCharacters.distinguishableCharacters,
 		]);
 	}
 
 	if (type === RandomStringType.AsciiPrintable) {
 		return GenerateForNumberRandom(length, [
-			...CryptoRandomStringCharacters.alphanumericCharacters,
+			...CryptoRandomStringCharacters.asciiPrintableCharacters,
 		]);
 	}
 
