@@ -39,6 +39,11 @@ Go to the project folder `apps/**` and use `cmd` to run the `pnpm run dev` comma
 pnpm up --filter "./apps/**"
 ```
 
+- `pnpm up --filter "./apps/**"`
+- `pnpm up --filter "./packages/**"`
+- `pnpm up --filter "./configs/**"`
+- `pnpm up -w`
+
 to upgrade all packages under `apps`
 
 ### Lint all project
