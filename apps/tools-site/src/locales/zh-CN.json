@@ -30,7 +30,8 @@
     "Tags": "标签",
     "UUID": "UUID",
     "Color": "颜色",
-    "Markdown": "Markdown"
+    "Markdown": "Markdown",
+    "CopyBook": "字帖"
   },
   "Layout": {
     "Application": {
