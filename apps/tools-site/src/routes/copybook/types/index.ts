@@ -9,6 +9,5 @@ export type articleFormType = {
 	fontFamily: string;
 	text: string;
 	color: Color | string;
-	key: string;
 	useBg: boolean;
 };

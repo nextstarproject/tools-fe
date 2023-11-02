@@ -6,6 +6,7 @@ import styles from "./print-article-modal.module.scss";
 import { textFormatted } from "../utils";
 import { articleFormType } from "../types";
 import classNames from "classnames";
+import * as dayjs from "dayjs";
 
 const PrintArticleModal = (props: {
 	open: boolean;
@@ -101,7 +102,7 @@ const PrintArticleModal = (props: {
 			cancelText={"取消"}
 			width={1000}
 			destroyOnClose={true}
-			key={props.articleContent.key}
+			key={dayjs(new Date()).toString()}
 		>
 			<Spin spinning={loading} tip={"正在打印中..."}>
 				<div ref={componentRef} style={{ zoom: 1 }}>

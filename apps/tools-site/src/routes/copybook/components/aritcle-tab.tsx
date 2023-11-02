@@ -4,8 +4,8 @@ import value from "../test.txt?raw";
 import PrintArticleModal from "./print-article-modal";
 import { articleFormType } from "../types";
 import { Color } from "antd/es/color-picker";
-import * as dayjs from "dayjs";
-import { AHrefRelReferrer } from "@project-self/assets/consts/html-tag-consts";
+
+import { AHrefRelAllNo, AHrefRelReferrer } from "@project-self/assets/consts/html-tag-consts";
 
 const { Text, Paragraph, Link } = Typography;
 
@@ -16,16 +16,16 @@ const layout = {
 const tailLayout = {
 	wrapperCol: { offset: 3, span: 21 },
 };
+const defaultArticleData: articleFormType = {
+	fontFamily: `"方正行楷细 简", FZXingKaiXiS, FZKai-Z03S`,
+	color: "#cccccc",
+	text: value,
+	useBg: true,
+};
 const ArticleTab = () => {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm<articleFormType>();
-	const [articleData, setArticleData] = useState<articleFormType>({
-		fontFamily: `"方正行楷细 简", FZXingKaiXiS`,
-		color: "#cccccc",
-		text: value,
-		key: dayjs(new Date()).toString(),
-		useBg: true,
-	});
+	const [articleData, setArticleData] = useState<articleFormType>(defaultArticleData);
 	const onFinish = (formData: articleFormType) => {
 		if ((formData.color as Color).toHex) {
 			formData.color = (formData.color as Color).toHexString();
@@ -46,6 +46,11 @@ const ArticleTab = () => {
 					本页面内容参考：
 					<Link href="https://www.an2.net/" target={AHrefRelReferrer}>
 						www.an2.net
+					</Link>
+					<br />
+					字体可以在方正字库下载，个人使用免费，个别可以免费商用：
+					<Link href="https://www.foundertype.com/" target={AHrefRelAllNo}>
+						www.foundertype.com
 					</Link>
 				</Paragraph>
 			</Typography>
