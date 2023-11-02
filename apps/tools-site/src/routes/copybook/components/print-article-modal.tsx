@@ -35,7 +35,7 @@ const textFormatted = (text: string, linesPerSegment: number, wordsPerLine: numb
 	for (let i = 0; i < textArr.length; i += sum) {
 		const segmentLines = textArr.slice(i, i + sum);
 		if (segmentLines.length < sum) {
-			const excessCount = segmentLines.length;
+			const excessCount = sum - segmentLines.length;
 			for (let j = 0; j < excessCount; j++) {
 				segmentLines.push(" ");
 			}
@@ -99,6 +99,9 @@ const PrintArticleModal = (props: {
 								style={{
 									display: "inline-block",
 									backgroundImage: `url(${ZiTieBg})`,
+									backgroundPosition: "center",
+									backgroundRepeat: "no-repeat",
+									backgroundSize: "80px 80px",
 									width: "80px",
 									height: "80px",
 									color: "rgb(184, 184, 184)",
@@ -129,7 +132,7 @@ const PrintArticleModal = (props: {
 	};
 	return (
 		<Modal
-			title="Modal"
+			title="字帖预览"
 			centered
 			open={props.open}
 			onOk={handlePrint}

@@ -18,6 +18,7 @@ const CopyBook = () => {
 			<Input value={fontFamily} onChange={(e) => setFontFamily(e.target.value)} />
 			<Button onClick={() => setOpen(true)}>生成字帖</Button>
 			<PrintArticleModal
+				key={"1"}
 				content={content}
 				open={open}
 				setOpen={setOpen}
