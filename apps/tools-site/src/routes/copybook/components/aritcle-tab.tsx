@@ -63,7 +63,11 @@ const ArticleTab = () => {
 				onFinish={onFinish}
 				initialValues={articleData}
 			>
-				<Form.Item name="fontFamily" label="字体">
+				<Form.Item
+					name="fontFamily"
+					label="字体"
+					rules={[{ required: true, message: "请输入字体" }]}
+				>
 					<Input />
 				</Form.Item>
 				<Form.Item name="color" label="颜色">
@@ -91,9 +95,20 @@ const ArticleTab = () => {
 				<Form.Item
 					name="text"
 					label="内容"
-					rules={[{ required: true, message: "Please input your text!" }]}
+					rules={[{ required: true, message: "请输入字帖内容" }]}
 				>
-					<Input.TextArea rows={8} />
+					<Input.TextArea
+						rows={8}
+						showCount={{
+							formatter: (info) => {
+								if (info.count > 6000) {
+									return <span className={"text-red-500"}>{info.count}</span>;
+								} else {
+									return <span className={"text-green-500"}>{info.count}</span>;
+								}
+							},
+						}}
+					/>
 				</Form.Item>
 				<Form.Item {...tailLayout}>
 					<Button type="primary" htmlType="submit">
