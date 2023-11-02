@@ -26,6 +26,7 @@ const PrintArticleModal = (props: {
 
 	const handlePrint = useReactToPrint({
 		content: () => componentRef.current as unknown as ReactInstance,
+		bodyClass: styles.printWrapper,
 		copyStyles: true,
 		documentTitle: "字帖打印",
 		onBeforePrint: beforePrintHandler,
@@ -58,7 +59,12 @@ const PrintArticleModal = (props: {
 			<>
 				<div className={styles.ziPage} key={"zi-page" + index}>
 					{props.articleContent.pageHeader && (
-						<span className={styles.printShow}>{props.articleContent.pageHeader}</span>
+						<span
+							className={styles.printShow}
+							style={{ color: props.articleContent.color as string }}
+						>
+							{props.articleContent.pageHeader}
+						</span>
 					)}
 					<ul key={index} className={styles.ziUl}>
 						{segment.map((line, lineIndex) => (
@@ -78,16 +84,17 @@ const PrintArticleModal = (props: {
 						))}
 					</ul>
 					{props.articleContent.usePageFooter && (
-						<span className={styles.printShow}>
+						<span
+							className={styles.printShow}
+							style={{ color: props.articleContent.color as string }}
+						>
 							{index + 1}/{count}
 						</span>
 					)}
 				</div>
 				{index == segments.length - 1 || (
 					<div className={styles.afterPage} key={"after-page" + index}>
-						<div className={styles.pageHeader} style={{ color: "rgb(102, 102, 102)" }}>
-							{"  \u000C  "}
-						</div>
+						<div className={styles.pageHeader}>{"  \u000C  "}</div>
 					</div>
 				)}
 			</>
@@ -106,11 +113,8 @@ const PrintArticleModal = (props: {
 			destroyOnClose={true}
 		>
 			<Spin spinning={loading} tip={"正在打印中..."}>
-				<div ref={componentRef} style={{ zoom: 1 }}>
-					<div
-						className={styles.pageHeader}
-						style={{ color: "rgb(102, 102, 102)" }}
-					></div>
+				<div ref={componentRef} style={{ zoom: 1 }} className={styles.printWrapper}>
+					<div className={styles.pageHeader}></div>
 					{renderedSegments(contentArr)}
 				</div>
 			</Spin>

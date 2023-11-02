@@ -1,61 +1,71 @@
-.ziPage {
-	width: 938px;
-	margin: 0 auto;
-	padding-left: 2px;
-}
-
-.ziUl {
-	padding: 0;
-	margin: 0;
-	list-style: none;
-}
-.afterPage {
-	page-break-before: always;
+.printWrapper {
+    text-align: center;
 }
 
 .pageHeader {
-	height: 116px;
-	line-height: 136px;
-	font-size: 32px;
-	text-align: center;
-	display: none;
+    height: 116px;
+    line-height: 136px;
+    font-size: 32px;
+    text-align: center;
+    display: none;
+}
+
+.afterPage {
+    page-break-before: always;
+}
+
+.ziPage {
+    width: 938px;
+    margin: 0 auto;
+    padding-left: 2px;
+}
+
+.ziUl {
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 .printShow {
-	text-align: center;
-	display: none;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    display: none;
+    font-style: normal;
 }
 
 .liNormal {
-	display: inline-block;
-	width: 80px;
-	height: 80px;
-	font-size: 58px;
-	text-align: center;
-	line-height: 80px;
-	margin: 5px 0px 5px -2px;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    font-size: 58px;
+    text-align: center;
+    line-height: 80px;
+    margin: 5px 0px 5px -2px;
 }
 
 .liNormalBg {
-	background-image: url(../../../assets/bg.svg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 80px 80px;
+    background-image: url(../../../assets/bg.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80px 80px;
 }
 
 @media print {
-	.afterPage {
-		page-break-before: always;
-	}
-	.pageHeader {
-		display: block;
-	}
-	.printShow {
-		display: block;
-	}
+    .afterPage {
+        page-break-before: always;
+    }
+
+    .pageHeader {
+        display: block;
+    }
+
+    .printShow {
+        display: inline-block;
+    }
 }
 
 @page {
-	size: auto;
-	margin: 5mm -10mm 5mm;
+    size: auto;
+    margin: 5mm -10mm 5mm;
 }
