@@ -57,9 +57,9 @@ const PrintArticleModal = (props: {
 		return segments.map((segment, index) => (
 			<>
 				<div className={styles.ziPage} key={"zi-page" + index}>
-					<span className={styles.printShow}>
-						字帖打印：https://tools.nextstar.space/unclassified/copybook
-					</span>
+					{props.articleContent.pageHeader && (
+						<span className={styles.printShow}>{props.articleContent.pageHeader}</span>
+					)}
 					<ul key={index} className={styles.ziUl}>
 						{segment.map((line, lineIndex) => (
 							<li
@@ -77,9 +77,11 @@ const PrintArticleModal = (props: {
 							</li>
 						))}
 					</ul>
-					<span className={styles.printShow}>
-						{index + 1}/{count}
-					</span>
+					{props.articleContent.usePageFooter && (
+						<span className={styles.printShow}>
+							{index + 1}/{count}
+						</span>
+					)}
 				</div>
 				{index == segments.length - 1 || (
 					<div className={styles.afterPage} key={"after-page" + index}>
@@ -102,7 +104,6 @@ const PrintArticleModal = (props: {
 			cancelText={"取消"}
 			width={1000}
 			destroyOnClose={true}
-			key={dayjs(new Date()).toString()}
 		>
 			<Spin spinning={loading} tip={"正在打印中..."}>
 				<div ref={componentRef} style={{ zoom: 1 }}>

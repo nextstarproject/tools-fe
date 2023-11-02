@@ -17,10 +17,12 @@ const tailLayout = {
 	wrapperCol: { offset: 3, span: 21 },
 };
 const defaultArticleData: articleFormType = {
+	pageHeader: "字帖打印: https://tools.nextstar.space/unclassified/copybook",
 	fontFamily: `"方正行楷细 简", FZXingKaiXiS, FZKai-Z03S`,
 	color: "#cccccc",
 	text: value,
 	useBg: true,
+	usePageFooter: true,
 };
 const ArticleTab = () => {
 	const [open, setOpen] = useState(false);
@@ -63,6 +65,9 @@ const ArticleTab = () => {
 				onFinish={onFinish}
 				initialValues={articleData}
 			>
+				<Form.Item name="pageHeader" label="页头">
+					<Input />
+				</Form.Item>
 				<Form.Item
 					name="fontFamily"
 					label="字体"
@@ -90,6 +95,10 @@ const ArticleTab = () => {
 				</Form.Item>
 				<Form.Item name="useBg" label="背景" valuePropName="checked">
 					<Checkbox>使用背景格子</Checkbox>
+					{/* <Switch /> */}
+				</Form.Item>
+				<Form.Item name="usePageFooter" label="页脚" valuePropName="checked">
+					<Checkbox>使用页码</Checkbox>
 					{/* <Switch /> */}
 				</Form.Item>
 				<Form.Item

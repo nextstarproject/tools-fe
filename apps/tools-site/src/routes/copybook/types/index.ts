@@ -6,8 +6,10 @@ export const enum CopyBookType {
 }
 
 export type articleFormType = {
+	pageHeader?: string;
 	fontFamily: string;
 	text: string;
 	color: Color | string;
 	useBg: boolean;
+	usePageFooter: boolean;
 };
