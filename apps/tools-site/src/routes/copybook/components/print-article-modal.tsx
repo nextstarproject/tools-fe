@@ -3,53 +3,14 @@ import React, { Dispatch, ReactInstance, SetStateAction, useEffect, useRef, useS
 import ZiTieBg from "@project-self/assets/bg.svg";
 import { useReactToPrint } from "react-to-print";
 import styles from "./print-article-modal.module.scss";
-
-const paragraphFormatted = (paragraphs: string[], wordsPerLine: number) => {
-	let newStrArr: string[] = [];
-	for (let i = 0; i < paragraphs.length; i++) {
-		const temp1 = [...paragraphs[i]];
-		temp1.unshift(" ", " ");
-		const excess = temp1.length % wordsPerLine;
-		if (excess != 0) {
-			for (let j = 0; j < wordsPerLine - excess; j++) {
-				temp1.push(" ");
-			}
-		}
-
-		newStrArr = newStrArr.concat(temp1);
-	}
-	return newStrArr;
-};
-
-/**
- *
- * @param text 文本
- * @param linesPerSegment 多少行分割
- * @param wordsPerLine 每行字数
- */
-const textFormatted = (text: string, linesPerSegment: number, wordsPerLine: number): string[][] => {
-	const paragraphList = text.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n");
-	const textArr: string[] = paragraphFormatted(paragraphList, wordsPerLine);
-	const segments: string[][] = [];
-	const sum = linesPerSegment * wordsPerLine;
-	for (let i = 0; i < textArr.length; i += sum) {
-		const segmentLines = textArr.slice(i, i + sum);
-		if (segmentLines.length < sum) {
-			const excessCount = sum - segmentLines.length;
-			for (let j = 0; j < excessCount; j++) {
-				segmentLines.push(" ");
-			}
-		}
-		segments.push(segmentLines);
-	}
-	return segments;
-};
+import { textFormatted } from "../utils";
+import { articleFormType } from "../types";
+import classNames from "classnames";
 
 const PrintArticleModal = (props: {
-	content: string;
 	open: boolean;
 	setOpen: Dispatch<SetStateAction<boolean>>;
-	fontFamily: string;
+	articleContent: articleFormType;
 }) => {
 	const componentRef = useRef(null);
 	const [loading, setLoading] = useState(false);
@@ -68,6 +29,12 @@ const PrintArticleModal = (props: {
 		documentTitle: "字帖打印",
 		onBeforePrint: beforePrintHandler,
 		onAfterPrint: afterPrintHandler,
+		fonts: [
+			{
+				family: props.articleContent.fontFamily,
+				source: `local(${props.articleContent.fontFamily})`,
+			},
+		],
 	});
 
 	const handleKeyDown = (event: KeyboardEvent) => {
@@ -82,34 +49,27 @@ const PrintArticleModal = (props: {
 			window.removeEventListener("keydown", handleKeyDown);
 		};
 	}, []);
-	const contentArr = textFormatted(props.content, 15, 12);
+	const contentArr = textFormatted(props.articleContent.text, 15, 12);
 	// 渲染段落和行
 	const renderedSegments = (segments: string[][]) => {
 		const count = segments.length;
 		return segments.map((segment, index) => (
 			<>
-				<div className={styles.ziPage}>
+				<div className={styles.ziPage} key={"zi-page" + index}>
 					<span className={styles.printShow}>
 						字帖打印：https://tools.nextstar.space/unclassified/copybook
 					</span>
 					<ul key={index} className={styles.ziUl}>
 						{segment.map((line, lineIndex) => (
 							<li
+								className={classNames(
+									styles.liNormal,
+									props.articleContent.useBg ? styles.liNormalBg : ""
+								)}
 								key={lineIndex}
 								style={{
-									display: "inline-block",
-									backgroundImage: `url(${ZiTieBg})`,
-									backgroundPosition: "center",
-									backgroundRepeat: "no-repeat",
-									backgroundSize: "80px 80px",
-									width: "80px",
-									height: "80px",
-									color: "rgb(184, 184, 184)",
-									fontFamily: props.fontFamily,
-									fontSize: "58px",
-									textAlign: "center",
-									lineHeight: "80px",
-									margin: "5px 0px 5px -2px",
+									color: props.articleContent.color as string,
+									fontFamily: props.articleContent.fontFamily,
 								}}
 							>
 								{line === " " ? "\u00A0" : line}
@@ -121,7 +81,7 @@ const PrintArticleModal = (props: {
 					</span>
 				</div>
 				{index == segments.length - 1 || (
-					<div className={styles.afterPage}>
+					<div className={styles.afterPage} key={"after-page" + index}>
 						<div className={styles.pageHeader} style={{ color: "rgb(102, 102, 102)" }}>
 							{"  \u000C  "}
 						</div>
@@ -138,8 +98,10 @@ const PrintArticleModal = (props: {
 			onOk={handlePrint}
 			onCancel={() => props.setOpen(false)}
 			okText={"打印"}
+			cancelText={"取消"}
 			width={1000}
 			destroyOnClose={true}
+			key={props.articleContent.key}
 		>
 			<Spin spinning={loading} tip={"正在打印中..."}>
 				<div ref={componentRef} style={{ zoom: 1 }}>

@@ -21,24 +21,41 @@
 	display: none;
 }
 
-.printShow{
+.printShow {
 	text-align: center;
 	display: none;
 }
 
-@media print{
-    .afterPage{
-        page-break-before: always;
-    }
-    .pageHeader{
-        display: block;
-    }
-	.printShow{
+.liNormal {
+	display: inline-block;
+	width: 80px;
+	height: 80px;
+	font-size: 58px;
+	text-align: center;
+	line-height: 80px;
+	margin: 5px 0px 5px -2px;
+}
+
+.liNormalBg {
+	background-image: url(../../../assets/bg.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 80px 80px;
+}
+
+@media print {
+	.afterPage {
+		page-break-before: always;
+	}
+	.pageHeader {
+		display: block;
+	}
+	.printShow {
 		display: block;
 	}
 }
 
-@page{
-    size: auto;
-    margin: 5mm -10mm 5mm;
+@page {
+	size: auto;
+	margin: 5mm -10mm 5mm;
 }

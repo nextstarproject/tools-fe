@@ -1,28 +1,40 @@
-import { Button, Input } from "antd";
-import PrintArticleModal from "./components/print-article-modal";
-import { useState } from "react";
-import value from "./test.txt?raw";
+import { Divider, Tabs, Typography } from "antd";
+import { CopyBookType } from "./types";
+import useTabKey from "@project-self/hooks/useTabKey";
+import { useTranslation } from "nsp-i18n";
+import ArticleTab from "./components/aritcle-tab";
+import React from "react";
 
 const CopyBook = () => {
-	const [open, setOpen] = useState(false);
-	const [content, setContent] = useState(value);
-	const [fontFamily, setFontFamily] = useState(`"方正行楷细 简", FZXingKaiXiS`);
+	const [tabKey, setTabKey] = useTabKey(CopyBookType.SingeLine);
+	const { t } = useTranslation();
+
+	const handleTabSwitch = (key: string) => {
+		setTabKey(key);
+	};
+
 	return (
-		<section>
-			<p>Edge无法读取系统字体，Chrome可以的</p>
-			<Input.TextArea
-				rows={10}
-				value={content}
-				onChange={(e) => setContent(e.target.value)}
-			></Input.TextArea>
-			<Input value={fontFamily} onChange={(e) => setFontFamily(e.target.value)} />
-			<Button onClick={() => setOpen(true)}>生成字帖</Button>
-			<PrintArticleModal
-				key={"1"}
-				content={content}
-				open={open}
-				setOpen={setOpen}
-				fontFamily={fontFamily}
+		<section className={"h-full"}>
+			<Tabs
+				className={"h-full overflow-auto"}
+				defaultActiveKey={tabKey}
+				onChange={handleTabSwitch}
+				items={[
+					{
+						label: "单字字帖",
+						key: CopyBookType.SingeLine,
+						children: (
+							<React.Fragment>
+								<span>SingeLine</span>
+							</React.Fragment>
+						),
+					},
+					{
+						label: "文章字帖",
+						key: CopyBookType.Article,
+						children: <ArticleTab />,
+					},
+				]}
 			/>
 		</section>
 	);
