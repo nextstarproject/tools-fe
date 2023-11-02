@@ -1,0 +1,38 @@
+.centeredPage{
+}
+.ziPage {
+	width: 938px;
+	margin: 0 auto;
+	padding-left: 2px;
+}
+
+.ziUl {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.afterPage {
+	page-break-before: always;
+}
+
+.pageHeader {
+	height: 116px;
+	line-height: 136px;
+	font-size: 32px;
+	text-align: center;
+	display: none;
+}
+
+@media print{
+    .afterPage{
+        page-break-before: always;
+    }
+    .pageHeader{
+        display: block;
+    }
+}
+
+@page{
+    size: auto;
+    margin: 5mm -10mm 5mm;
+}
