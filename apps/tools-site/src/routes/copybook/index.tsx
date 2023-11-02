@@ -1,5 +1,5 @@
 import { Button, Input } from "antd";
-import PrintModal from "./components/print-modal";
+import PrintArticleModal from "./components/print-article-modal";
 import { useState } from "react";
 import value from "./test.txt?raw";
 
@@ -17,7 +17,12 @@ const CopyBook = () => {
 			></Input.TextArea>
 			<Input value={fontFamily} onChange={(e) => setFontFamily(e.target.value)} />
 			<Button onClick={() => setOpen(true)}>生成字帖</Button>
-			<PrintModal content={content} open={open} setOpen={setOpen} fontFamily={fontFamily} />
+			<PrintArticleModal
+				content={content}
+				open={open}
+				setOpen={setOpen}
+				fontFamily={fontFamily}
+			/>
 		</section>
 	);
 };

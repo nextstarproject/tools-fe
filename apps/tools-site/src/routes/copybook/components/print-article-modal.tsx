@@ -1,8 +1,8 @@
-import { Button, Modal } from "antd";
-import React, { Dispatch, ReactInstance, SetStateAction, useRef, useState } from "react";
+import { Button, Modal, Spin } from "antd";
+import React, { Dispatch, ReactInstance, SetStateAction, useEffect, useRef, useState } from "react";
 import ZiTieBg from "@project-self/assets/bg.svg";
 import { useReactToPrint } from "react-to-print";
-import styles from "./print-modal.module.scss";
+import styles from "./print-article-modal.module.scss";
 
 const paragraphFormatted = (paragraphs: string[], wordsPerLine: number) => {
 	let newStrArr: string[] = [];
@@ -45,30 +45,53 @@ const textFormatted = (text: string, linesPerSegment: number, wordsPerLine: numb
 	return segments;
 };
 
-const PrintModal = (props: {
+const PrintArticleModal = (props: {
 	content: string;
 	open: boolean;
 	setOpen: Dispatch<SetStateAction<boolean>>;
 	fontFamily: string;
 }) => {
 	const componentRef = useRef(null);
+	const [loading, setLoading] = useState(false);
+
+	const beforePrintHandler = () => {
+		setLoading(true);
+	};
+
+	const afterPrintHandler = () => {
+		setLoading(false);
+	};
+
 	const handlePrint = useReactToPrint({
 		content: () => componentRef.current as unknown as ReactInstance,
 		copyStyles: true,
 		documentTitle: "字帖打印",
-		fonts: [
-			{
-				family: props.fontFamily,
-				source: `local(props.fontFamily)`,
-			},
-		],
+		onBeforePrint: beforePrintHandler,
+		onAfterPrint: afterPrintHandler,
 	});
+
+	const handleKeyDown = (event: KeyboardEvent) => {
+		if (event.ctrlKey && event.key === "p") {
+			event.preventDefault(); // 阻止默认的打印行为
+			handlePrint();
+		}
+	};
+	useEffect(() => {
+		window.addEventListener("keydown", handleKeyDown);
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, []);
 	const contentArr = textFormatted(props.content, 15, 12);
 	// 渲染段落和行
 	const renderedSegments = (segments: string[][]) => {
+		const count = segments.length;
 		return segments.map((segment, index) => (
 			<>
 				<div className={styles.ziPage}>
+					<span className={styles.printShow}>
+						字帖打印：https://tools.nextstar.space/unclassified/copybook
+					</span>
 					<ul key={index} className={styles.ziUl}>
 						{segment.map((line, lineIndex) => (
 							<li
@@ -90,6 +113,9 @@ const PrintModal = (props: {
 							</li>
 						))}
 					</ul>
+					<span className={styles.printShow}>
+						{index + 1}/{count}
+					</span>
 				</div>
 				{index == segments.length - 1 || (
 					<div className={styles.afterPage}>
@@ -112,12 +138,17 @@ const PrintModal = (props: {
 			width={1000}
 			destroyOnClose={true}
 		>
-			<div ref={componentRef}>
-				<div className={styles.pageHeader} style={{ color: "rgb(102, 102, 102)" }}></div>
-				{renderedSegments(contentArr)}
-			</div>
+			<Spin spinning={loading} tip={"正在打印中..."}>
+				<div ref={componentRef} style={{ zoom: 1 }}>
+					<div
+						className={styles.pageHeader}
+						style={{ color: "rgb(102, 102, 102)" }}
+					></div>
+					{renderedSegments(contentArr)}
+				</div>
+			</Spin>
 		</Modal>
 	);
 };
 
-export default PrintModal;
+export default PrintArticleModal;

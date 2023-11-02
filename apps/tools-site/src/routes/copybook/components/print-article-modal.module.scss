@@ -1,5 +1,3 @@
-.centeredPage{
-}
 .ziPage {
 	width: 938px;
 	margin: 0 auto;
@@ -23,6 +21,11 @@
 	display: none;
 }
 
+.printShow{
+	text-align: center;
+	display: none;
+}
+
 @media print{
     .afterPage{
         page-break-before: always;
@@ -30,6 +33,9 @@
     .pageHeader{
         display: block;
     }
+	.printShow{
+		display: block;
+	}
 }
 
 @page{
