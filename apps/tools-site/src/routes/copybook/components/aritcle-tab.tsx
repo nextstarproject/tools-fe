@@ -66,14 +66,14 @@ const ArticleTab = () => {
 				initialValues={articleData}
 			>
 				<Form.Item name="pageHeader" label="页头">
-					<Input />
+					<Input allowClear />
 				</Form.Item>
 				<Form.Item
 					name="fontFamily"
 					label="字体"
 					rules={[{ required: true, message: "请输入字体" }]}
 				>
-					<Input />
+					<Input allowClear />
 				</Form.Item>
 				<Form.Item name="color" label="颜色">
 					<ColorPicker
@@ -107,7 +107,9 @@ const ArticleTab = () => {
 					rules={[{ required: true, message: "请输入字帖内容" }]}
 				>
 					<Input.TextArea
-						rows={8}
+						className={"scroll-common"}
+						allowClear
+						rows={16}
 						showCount={{
 							formatter: (info) => {
 								if (info.count > 6000) {
