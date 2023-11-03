@@ -30,7 +30,8 @@
     "Tags": "标签",
     "UUID": "UUID",
     "Color": "颜色",
-    "Markdown": "Markdown"
+    "Markdown": "Markdown",
+    "CopyBook": "字帖"
   },
   "Layout": {
     "Application": {
@@ -110,5 +111,8 @@
     "Uppercase": "大写",
     "Braces": "括号",
     "NoHyphens": "无连字符"
+  },
+  "CopyBookPage": {
+    "ChineseTips": "此页面为汉字字帖，其他语言不支持。"
   }
 }

@@ -137,6 +137,9 @@ importers:
       react-router-dom:
         specifier: ^6.14.1
         version: 6.14.1(react-dom@18.2.0)(react@18.2.0)
+      react-to-print:
+        specifier: ^2.14.15
+        version: 2.14.15(react-dom@18.2.0)(react@18.2.0)
       redux-oidc:
         specifier: 4.0.0-beta1
         version: 4.0.0-beta1(oidc-client@1.11.5)(prop-types@15.8.1)(react@18.2.0)
@@ -10007,6 +10010,7 @@ packages:
 
   /nan@2.17.0:
     resolution: {integrity: sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -11932,6 +11936,16 @@ packages:
     dependencies:
       '@remix-run/router': 1.7.1
       react: 18.2.0
+    dev: false
+
+  /react-to-print@2.14.15(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-SKnwOzU2cJ8eaAkoJO7+gNhvfEDmm+Y34IdcHsjtHioUevUPhprqbVtvNJlZ2JkGJ8ExK2QNWM9pXECTDR5D8w==}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react@18.2.0:

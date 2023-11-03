@@ -150,6 +150,18 @@ export const BusinessMenus: MenuItem[] = [
 				permission: null,
 				children: null,
 			},
+			{
+				id: 100303,
+				name: "Menu.Unclassified.CopyBook",
+				i18n: {
+					"zh-CN": "字帖",
+					"en-US": "CopyBook",
+				},
+				icon: "nsp-file-common",
+				path: "/unclassified/copybook",
+				permission: null,
+				children: null,
+			},
 		],
 	},
 ];

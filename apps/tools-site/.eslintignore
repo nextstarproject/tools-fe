@@ -9,3 +9,4 @@ src/**/*.jpg
 package.json
 dist
 public
+src/assets/**/*.svg
