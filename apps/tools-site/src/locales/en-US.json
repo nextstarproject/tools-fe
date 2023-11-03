@@ -30,7 +30,8 @@
     "Tags": "标签",
     "UUID": "UUID",
     "Color": "Color",
-    "Markdown": "Markdown"
+    "Markdown": "Markdown",
+    "CopyBook": "Copy Book"
   },
   "Layout": {
     "Application": {
@@ -110,5 +111,8 @@
     "Uppercase": "Uppercase",
     "Braces": "Braces",
     "NoHyphens": "No Hyphens"
+  },
+  "CopyBookPage": {
+    "ChineseTips": "This page is for Chinese characters, other languages are not supported."
   }
 }
