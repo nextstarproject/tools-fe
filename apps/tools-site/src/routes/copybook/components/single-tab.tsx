@@ -10,6 +10,7 @@ import {
 	Space,
 	Tooltip,
 	Typography,
+	Tag,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import singleSample from "../single-sample.txt?raw";
@@ -89,8 +90,13 @@ const SingleTab = () => {
 								<Text code>{nums.line}</Text>和文字长度
 								<Text code>{nums.textLength}</Text>
 								相乘计算后再乘以单行字数<Text code>12</Text>
-								，结果<Text code>{nums.sum}</Text>
-								尽量不要过大，否则Modal可能渲染时比较卡顿
+								，结果&nbsp;
+								{nums.sum > 6000 ? (
+									<Tag color="#f50">{nums.sum}</Tag>
+								) : (
+									<Tag color="#87d068">{nums.sum}</Tag>
+								)}
+								尽量不要过大，否则Modal渲染时出现卡顿
 							</>
 						}
 						type="error"
