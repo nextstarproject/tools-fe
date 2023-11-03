@@ -111,5 +111,8 @@
     "Uppercase": "Uppercase",
     "Braces": "Braces",
     "NoHyphens": "No Hyphens"
+  },
+  "CopyBookPage": {
+    "ChineseTips": "This page is for Chinese characters, other languages are not supported."
   }
 }

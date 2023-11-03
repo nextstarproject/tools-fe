@@ -13,3 +13,7 @@ export type articleFormType = {
 	useBg: boolean;
 	usePageFooter: boolean;
 };
+
+export type singleFormType = articleFormType & {
+	repeatLine: number;
+};

@@ -6,19 +6,21 @@ import {
 	Divider,
 	Form,
 	Input,
+	InputNumber,
 	Space,
 	Tooltip,
 	Typography,
 } from "antd";
-import React, { useState } from "react";
-import articleSample from "../article-sample.txt?raw";
-import PrintArticleModal from "./print-article-modal";
-import { articleFormType } from "../types";
+import React, { useEffect, useState } from "react";
+import singleSample from "../single-sample.txt?raw";
+import { singleFormType } from "../types";
 import { Color } from "antd/es/color-picker";
 import { AHrefRelAllNo, AHrefRelReferrer } from "@project-self/assets/consts/html-tag-consts";
 import { useTranslation } from "nsp-i18n";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import PrintSingleModal from "./print-single-modal";
 import dayjs from "dayjs";
+import { textSingleReplace } from "../utils";
 
 const { Text, Paragraph, Link } = Typography;
 
@@ -29,37 +31,70 @@ const layout = {
 const tailLayout = {
 	wrapperCol: { offset: 3, span: 21 },
 };
-const defaultArticleData: articleFormType = {
+const defaultArticleData: singleFormType = {
 	pageHeader: "字帖打印: https://tools.nextstar.space/unclassified/copybook",
 	fontFamily: `"方正行楷细 简", FZXingKaiXiS, FZKai-Z03S`,
 	color: "#cccccc",
-	text: articleSample,
+	text: singleSample,
 	useBg: true,
 	usePageFooter: true,
+	repeatLine: 1,
 };
-const ArticleTab = () => {
+const SingleTab = () => {
 	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);
-	const [destroy, setDestroy] = useState(false);
-	const [form] = Form.useForm<articleFormType>();
-	const [articleData, setArticleData] = useState<articleFormType>(defaultArticleData);
-	const onFinish = (formData: articleFormType) => {
+	const [nums, setNums] = useState<{ line: number; textLength: number; sum: number }>({
+		line: 0,
+		textLength: 0,
+		sum: 0,
+	});
+	const [form] = Form.useForm<singleFormType>();
+	const [articleData, setArticleData] = useState<singleFormType>(defaultArticleData);
+	const onFinish = (formData: singleFormType) => {
 		if ((formData.color as Color).toHex) {
 			formData.color = (formData.color as Color).toHexString();
 		}
 		setArticleData(formData);
 		setOpen(true);
 	};
+	const fieldsChangeHandler = () => {
+		console.log("fieldsChangeHandler");
+		setNums({
+			line: form.getFieldValue("repeatLine") ?? 0,
+			textLength: textSingleReplace(form.getFieldValue("text")).length ?? 0,
+			sum:
+				(form.getFieldValue("repeatLine") ?? 0) *
+				(form.getFieldValue("text")?.length ?? 0) *
+				12,
+		});
+	};
+	useEffect(() => {
+		fieldsChangeHandler();
+	}, []);
 	return (
 		<React.Fragment>
 			<Typography>
 				<Paragraph>
 					<Alert message={t("CopyBookPage.ChineseTips")} type="warning" />
-					本页面文章生成字帖，使用换行符进行换行分段，每一段都会自动进行首行缩进，尾部填充到末尾，默认最后一个页面补满空格。
+					本页面单行单字生成字帖，会将其中换行符、空格、<Text code>，</Text>、
+					<Text code>。</Text>全部删除掉，只保留纯内容。
 					<br />
 					输入文字并且选择好颜色后，点击生成字帖即可生成预览字体，此时点击打印或者使用
 					<Text keyboard>Ctrl + P</Text>进行打印
 					<br />
+					<Alert
+						message={
+							<>
+								重复行数
+								<Text code>{nums.line}</Text>和文字长度
+								<Text code>{nums.textLength}</Text>
+								相乘计算后再乘以单行字数<Text code>12</Text>
+								，结果<Text code>{nums.sum}</Text>
+								尽量不要过大，否则Modal可能渲染时比较卡顿
+							</>
+						}
+						type="error"
+					/>
 					本页面内容参考：
 					<Link href="https://www.an2.net/" target={AHrefRelReferrer}>
 						www.an2.net
@@ -75,7 +110,8 @@ const ArticleTab = () => {
 			<Form
 				{...layout}
 				form={form}
-				name="copybook-article-tab"
+				onValuesChange={fieldsChangeHandler}
+				name="copybook-single-tab"
 				style={{ maxWidth: 1000 }}
 				onFinish={onFinish}
 				initialValues={articleData}
@@ -125,6 +161,20 @@ const ArticleTab = () => {
 						]}
 					/>
 				</Form.Item>
+				<Form.Item
+					name="repeatLine"
+					label={
+						<Space>
+							<span>重复行数</span>
+							<Tooltip placement="top" title={"可设置1-15，单页上限为15行"}>
+								<QuestionCircleOutlined />
+							</Tooltip>
+						</Space>
+					}
+					rules={[{ required: true, message: "请选择重复行数" }]}
+				>
+					<InputNumber min={1} max={15} />
+				</Form.Item>
 				<Form.Item name="useBg" label="背景" valuePropName="checked">
 					<Checkbox>使用背景格子</Checkbox>
 					{/* <Switch /> */}
@@ -160,7 +210,7 @@ const ArticleTab = () => {
 				</Form.Item>
 			</Form>
 			{open && (
-				<PrintArticleModal
+				<PrintSingleModal
 					key={dayjs(new Date()).toString()}
 					open={open}
 					setOpen={setOpen}
@@ -171,4 +221,4 @@ const ArticleTab = () => {
 	);
 };
 
-export default ArticleTab;
+export default SingleTab;

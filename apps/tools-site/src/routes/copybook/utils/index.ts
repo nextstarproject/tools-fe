@@ -1,19 +1,19 @@
+import _ from "lodash";
+
 /**
  * @description 将多段落中每个段落进行处理，首行缩进两个，尾部填满空格
  * @param paragraphs 进行换行分割后的多段落
  * @param wordsPerLine 一行几个字
  * @returns
  */
-export const paragraphFormatted = (paragraphs: string[], wordsPerLine: number) => {
+const paragraphFormatted = (paragraphs: string[], wordsPerLine: number) => {
 	let newStrArr: string[] = [];
 	for (let i = 0; i < paragraphs.length; i++) {
-		const temp1 = [...paragraphs[i]];
+		let temp1 = [...paragraphs[i]];
 		temp1.unshift(" ", " ");
 		const excess = temp1.length % wordsPerLine;
 		if (excess != 0) {
-			for (let j = 0; j < wordsPerLine - excess; j++) {
-				temp1.push(" ");
-			}
+			temp1 = temp1.concat(_.fill(Array(wordsPerLine - excess), " "));
 		}
 
 		newStrArr = newStrArr.concat(temp1);
@@ -37,12 +37,63 @@ export const textFormatted = (
 	const segments: string[][] = [];
 	const sum = linesPerSegment * wordsPerLine;
 	for (let i = 0; i < textArr.length; i += sum) {
-		const segmentLines = textArr.slice(i, i + sum);
+		let segmentLines = textArr.slice(i, i + sum);
 		if (segmentLines.length < sum) {
 			const excessCount = sum - segmentLines.length;
-			for (let j = 0; j < excessCount; j++) {
-				segmentLines.push(" ");
-			}
+			segmentLines = segmentLines.concat(_.fill(Array(excessCount), " "));
+		}
+		segments.push(segmentLines);
+	}
+	return segments;
+};
+
+// 单行字帖
+export const textSingleReplace = (text: string | undefined): string[] => {
+	if (text == undefined) {
+		return [];
+	}
+	const wordList = text
+		.replaceAll("\r\n", "")
+		.replaceAll("\r", "")
+		.replaceAll("\n", "")
+		.replaceAll("，", "")
+		.replaceAll("。", "")
+		.replaceAll(" ", "")
+		.split("");
+	return wordList;
+};
+
+/**
+ *
+ * @param text
+ * @param linesPerSegment
+ * @param wordsPerLine
+ * @param repeatLine
+ */
+export const textFormattedToSingleWord = (
+	text: string,
+	linesPerSegment: number,
+	wordsPerLine: number,
+	repeatLine: number
+): string[][] => {
+	const wordList = textSingleReplace(text);
+	let textArr: string[] = [];
+	for (let i = 0; i < wordList.length; i++) {
+		const temp = _.fill(Array(wordsPerLine), wordList[i]);
+		let len = repeatLine;
+		while (len > 0) {
+			textArr = textArr.concat(temp);
+			len--;
+		}
+	}
+
+	const segments: string[][] = [];
+	const sum = linesPerSegment * wordsPerLine;
+	for (let i = 0; i < textArr.length; i += sum) {
+		let segmentLines = textArr.slice(i, i + sum);
+		if (segmentLines.length < sum) {
+			const excessCount = sum - segmentLines.length;
+			segmentLines = segmentLines.concat(_.fill(Array(excessCount), " "));
 		}
 		segments.push(segmentLines);
 	}

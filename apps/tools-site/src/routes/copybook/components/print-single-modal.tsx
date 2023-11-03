@@ -2,14 +2,14 @@ import { Modal, Spin } from "antd";
 import { Dispatch, ReactInstance, SetStateAction, useEffect, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import styles from "./print-article-modal.module.scss";
-import { textFormatted } from "../utils";
-import { articleFormType } from "../types";
+import { textFormattedToSingleWord } from "../utils";
+import { singleFormType } from "../types";
 import classNames from "classnames";
 
-const PrintArticleModal = (props: {
+const PrintSingleModal = (props: {
 	open: boolean;
 	setOpen: Dispatch<SetStateAction<boolean>>;
-	articleContent: articleFormType;
+	articleContent: singleFormType;
 }) => {
 	const componentRef = useRef(null);
 	const [loading, setLoading] = useState(false);
@@ -49,7 +49,12 @@ const PrintArticleModal = (props: {
 			window.removeEventListener("keydown", handleKeyDown);
 		};
 	}, []);
-	const contentArr = textFormatted(props.articleContent.text, 15, 12);
+	const contentArr = textFormattedToSingleWord(
+		props.articleContent.text,
+		15,
+		12,
+		props.articleContent.repeatLine
+	);
 	// 渲染段落和行
 	const renderedSegments = (segments: string[][]) => {
 		const count = segments.length;
@@ -73,7 +78,10 @@ const PrintArticleModal = (props: {
 								)}
 								key={lineIndex}
 								style={{
-									color: props.articleContent.color as string,
+									color:
+										lineIndex % 12 == 0
+											? "#1d273b"
+											: (props.articleContent.color as string),
 									fontFamily: `${props.articleContent.fontFamily}`,
 								}}
 							>
@@ -120,4 +128,4 @@ const PrintArticleModal = (props: {
 	);
 };
 
-export default PrintArticleModal;
+export default PrintSingleModal;

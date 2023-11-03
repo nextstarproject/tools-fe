@@ -152,7 +152,7 @@ const LayoutMain = () => {
 				<LayoutLeftSidebar prepare={prepare} />
 				<Layout.Content
 					className={
-						"flex flex-col h-full overflow-auto relative [&>section]:overflow-auto [&>section]:flex-1 [&>section]:px-4 [&>section]:py-2"
+						"flex flex-col h-full overflow-auto relative [&>section]:overflow-auto [&>section]:flex-1 [&>section]:px-4 [&>section]:py-2 scroll-common"
 					}
 					style={{ backgroundColor: colorBgLayout }}
 				>

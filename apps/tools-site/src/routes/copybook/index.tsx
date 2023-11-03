@@ -4,6 +4,7 @@ import useTabKey from "@project-self/hooks/useTabKey";
 import { useTranslation } from "nsp-i18n";
 import ArticleTab from "./components/aritcle-tab";
 import React from "react";
+import SingleTab from "./components/single-tab";
 
 const CopyBook = () => {
 	const [tabKey, setTabKey] = useTabKey(CopyBookType.SingeLine);
@@ -23,11 +24,7 @@ const CopyBook = () => {
 					{
 						label: "单字字帖",
 						key: CopyBookType.SingeLine,
-						children: (
-							<React.Fragment>
-								<span>SingeLine</span>
-							</React.Fragment>
-						),
+						children: <SingleTab />,
 					},
 					{
 						label: "文章字帖",
