@@ -7,6 +7,15 @@ export const CryptoOneWayEncryption = (
 	outCodeType: FormatType,
 	text: string
 ): string => {
+	// generateRsaKey().then((x) => {
+	// 	console.log(x);
+	// 	console.log(exportPrivateKey(x.privateKey));
+	// 	console.log(exportPublicKey(x.publicKey));
+	// 	encryptRSAOAEP("123", x.publicKey).then((x1) => {
+	// 		console.log(x1);
+	// 		console.log(decryptRSAOAEP(x1, x.privateKey));
+	// 	});
+	// });
 	switch (type) {
 		case OneWayEncryptionType.MD5:
 			return CryptoJS.MD5(
