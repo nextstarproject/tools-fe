@@ -1,12 +1,21 @@
-// import {
-// 	decryptRSAOAEP,
-// 	encryptRSAOAEP,
-// 	exportPrivateKey,
-// 	exportPublicKey,
-// 	generateRsaKey,
-// } from "nsp-utils";
+import { NspSubtleCrypto } from "nsp-utils";
 import { FormatType, OneWayEncryptionType } from "../types";
 import CryptoJS from "crypto-js";
+
+const { generateEcdsaKey, exportPrivateKey, exportPublicKey, signEcdsa, verifyEcdsa } =
+	NspSubtleCrypto.EcdsaCrypto;
+
+const test = async function () {
+	const key = await generateEcdsaKey("P-256", ["sign", "verify"]);
+	const privateKey = await exportPrivateKey(key.privateKey);
+	const publicKey = await exportPublicKey(key.publicKey);
+	console.log(privateKey);
+	console.log(publicKey);
+	const signText = await signEcdsa("123", key.privateKey);
+	console.log(signText);
+	const result = await verifyEcdsa("123", signText, key.publicKey);
+	console.log(result);
+};
 
 export const CryptoOneWayEncryption = (
 	type: OneWayEncryptionType,
@@ -14,15 +23,7 @@ export const CryptoOneWayEncryption = (
 	outCodeType: FormatType,
 	text: string
 ): string => {
-	// generateRsaKey().then((x) => {
-	// 	console.log(x);
-	// 	console.log(exportPrivateKey(x.privateKey));
-	// 	console.log(exportPublicKey(x.publicKey));
-	// 	encryptRSAOAEP("123", x.publicKey).then((x1) => {
-	// 		console.log(x1);
-	// 		console.log(decryptRSAOAEP(x1, x.privateKey));
-	// 	});
-	// });
+	// test().then();
 	switch (type) {
 		case OneWayEncryptionType.MD5:
 			return CryptoJS.MD5(

@@ -157,4 +157,8 @@ export const hexToByte = (hex: string): ArrayBuffer => {
 	return typedArray.buffer;
 };
 
-export type hashAlgorithm = "SHA-256" | "SHA-384" | "SHA-512";
+export type HashAlgorithm = "SHA-256" | "SHA-384" | "SHA-512";
+
+export type WrapUnwrapKeyUsages = "wrapKey" | "unwrapKey";
+export type EncryptDecryptUsages = "encrypt" | "decrypt";
+export type SignVerifyUsages = "sign" | "verify";

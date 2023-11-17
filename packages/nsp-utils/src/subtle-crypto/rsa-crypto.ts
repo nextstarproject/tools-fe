@@ -1,12 +1,13 @@
-import { base64ToByte, byteToBase64, byteToStr, hashAlgorithm, strToByte } from "./normal";
-
-export type GenerateKeyAlgorithm =
-	| RsaHashedKeyGenParams
-	| EcKeyGenParams
-	| HmacKeyGenParams
-	| AesKeyGenParams;
-
-export type RsaHashedKeyGenName = "RSASSA-PKCS1-v1_5" | "RSA-PSS" | "RSA-OAEP";
+import {
+	base64ToByte,
+	byteToBase64,
+	byteToStr,
+	EncryptDecryptUsages,
+	HashAlgorithm,
+	SignVerifyUsages,
+	strToByte,
+	WrapUnwrapKeyUsages,
+} from "./normal";
 
 // encrypt RSA-OAEP AES-CTR AES-CBC AES-GCM
 // decrypt RSA-OAEP AES-CTR AES-CBC AES-GCM
@@ -17,6 +18,22 @@ export type RsaHashedKeyGenName = "RSASSA-PKCS1-v1_5" | "RSA-PSS" | "RSA-OAEP";
 // wrapKey RSA-OAEP AES-CTR AES-CBC AES-GCM AES-KW
 // unwrapKey RSA-OAEP AES-CTR AES-CBC AES-GCM AES-KW
 
+export type RsaPssTypes = "RSA-PSS";
+export type RsaPkcs1Type = "RSASSA-PKCS1-v1_5";
+
+export type RsaEncryptDecryptTypes = "RSA-OAEP";
+export type RsaSignVerifyTypes = RsaPkcs1Type | RsaPssTypes;
+export type RsaWrapKeyUnwrapKeyTypes = "RSA-OAEP";
+
+export type RsaKeyTypes = RsaEncryptDecryptTypes | RsaSignVerifyTypes | RsaWrapKeyUnwrapKeyTypes;
+
+export type RsaPssParameter<T extends RsaSignVerifyTypes> = T extends RsaPssTypes ? number : never;
+
+export type RsaKeyUsages<T extends RsaKeyTypes> = T extends
+	| RsaEncryptDecryptTypes
+	| RsaWrapKeyUnwrapKeyTypes
+	? EncryptDecryptUsages | WrapUnwrapKeyUsages
+	: SignVerifyUsages;
 /**
  *
  * @param name 为了安全请使用：RSA-OAEP
@@ -25,22 +42,13 @@ export type RsaHashedKeyGenName = "RSASSA-PKCS1-v1_5" | "RSA-PSS" | "RSA-OAEP";
  * @param extractable 是否允许导出key
  * @param keyUsages 使用范围
  * @returns
- * @example
- * encrypt RSA-OAEP AES-CTR AES-CBC AES-GCM
- * decrypt RSA-OAEP AES-CTR AES-CBC AES-GCM
- * sign RSASSA-PKCS1-v1_5 RSA-PSS ECDSA HMAC
- * verify RSASSA-PKCS1-v1_5 RSA-PSS ECDSA HMAC
- * deriveKey ECDH HKDF PBKDF2
- * deriveBits ECDH HKDF PBKDF2
- * wrapKey RSA-OAEP AES-CTR AES-CBC AES-GCM AES-KW
- * unwrapKey RSA-OAEP AES-CTR AES-CBC AES-GCM AES-KW
  */
-export async function generateRsaKey(
+export async function generateRsaKey<T extends RsaKeyTypes>(
+	name: T,
+	keyUsages: ReadonlyArray<RsaKeyUsages<T>>,
 	modulusLength: number = 2048,
-	hash: hashAlgorithm = "SHA-256",
-	name: RsaHashedKeyGenName = "RSA-OAEP",
-	extractable: boolean = true,
-	keyUsages: ReadonlyArray<KeyUsage> = ["decrypt", "encrypt"]
+	hash: HashAlgorithm = "SHA-256",
+	extractable: boolean = true
 ): Promise<CryptoKeyPair> {
 	const result = await window.crypto.subtle.generateKey(
 		{
@@ -74,48 +82,13 @@ export async function exportJwtPrivateKey(key: CryptoKey) {
 	return exported;
 }
 
-/**
- *
- * @param message
- * @param key 公钥Key
- * @returns
- */
-export async function encryptRSAOAEP(message: string, key: CryptoKey): Promise<string> {
-	const encoded = strToByte(message);
-	const cipherText = await window.crypto.subtle.encrypt(
-		{
-			name: "RSA-OAEP",
-		},
-		key,
-		encoded
-	);
-	return byteToBase64(cipherText);
-}
-
-/**
- *
- * @param message
- * @param key 私钥Key
- * @returns
- */
-export async function decryptRSAOAEP(cipherText: string, key: CryptoKey): Promise<string> {
-	const decrypted = await window.crypto.subtle.decrypt(
-		{
-			name: "RSA-OAEP",
-		},
-		key,
-		base64ToByte(cipherText)
-	);
-	return byteToStr(decrypted);
-}
-
-export async function importPrivateKey(
+export async function importPrivateKey<T extends RsaKeyTypes>(
 	pem: string,
+	name: T,
+	keyUsages: ReadonlyArray<RsaKeyUsages<T>>,
 	modulusLength: number = 2048,
-	hash: hashAlgorithm = "SHA-256",
-	name: RsaHashedKeyGenName = "RSA-OAEP",
-	extractable: boolean = true,
-	keyUsages: ReadonlyArray<KeyUsage> = ["decrypt"]
+	hash: HashAlgorithm = "SHA-256",
+	extractable: boolean = true
 ) {
 	// fetch the part of the PEM string between header and footer
 	const pemHeader = "-----BEGIN PRIVATE KEY-----";
@@ -140,13 +113,13 @@ export async function importPrivateKey(
 	);
 }
 
-export async function importPublicKey(
+export async function importPublicKey<T extends RsaKeyTypes>(
 	pem: string,
+	name: T,
+	keyUsages: ReadonlyArray<RsaKeyUsages<T>>,
 	modulusLength: number = 2048,
-	hash: hashAlgorithm = "SHA-256",
-	name: RsaHashedKeyGenName = "RSA-OAEP",
-	extractable: boolean = true,
-	keyUsages: ReadonlyArray<KeyUsage> = ["encrypt"]
+	hash: HashAlgorithm = "SHA-256",
+	extractable: boolean = true
 ) {
 	// 获取 PEM 字符串在头部和尾部之间的部分
 	const pemHeader = "-----BEGIN PUBLIC KEY-----";
@@ -171,14 +144,14 @@ export async function importPublicKey(
 	);
 }
 
-export const importJwtPrivateKey = async (
+export async function importJwtPrivateKey<T extends RsaKeyTypes>(
 	jwk: JsonWebKey,
+	name: T,
+	keyUsages: ReadonlyArray<RsaKeyUsages<T>>,
 	modulusLength: number = 2048,
-	hash: hashAlgorithm = "SHA-256",
-	name: RsaHashedKeyGenName = "RSA-OAEP",
-	extractable: boolean = true,
-	keyUsages: ReadonlyArray<KeyUsage> = ["encrypt"]
-): Promise<CryptoKey> => {
+	hash: HashAlgorithm = "SHA-256",
+	extractable: boolean = true
+): Promise<CryptoKey> {
 	return window.crypto.subtle.importKey(
 		"jwk",
 		jwk,
@@ -191,8 +164,115 @@ export const importJwtPrivateKey = async (
 		extractable,
 		keyUsages
 	);
-};
+}
 
-export const RsaSubtleCrypto = {
-	importJwtPrivateKey,
-};
+/**
+ *
+ * @description 公钥加密
+ * @param message
+ * @param publicKey 公钥Key
+ * @returns base64值
+ */
+export async function encryptRsaOaep(message: string, publicKey: CryptoKey): Promise<string> {
+	const encoded = strToByte(message);
+	const cipherText = await window.crypto.subtle.encrypt(
+		{
+			name: "RSA-OAEP",
+		},
+		publicKey,
+		encoded
+	);
+	return byteToBase64(cipherText);
+}
+
+/**
+ * @description 私钥解密
+ * @param message
+ * @param privateKey 私钥Key
+ * @returns
+ */
+export async function decryptRsaOaep(cipherText: string, privateKey: CryptoKey): Promise<string> {
+	const decrypted = await window.crypto.subtle.decrypt(
+		{
+			name: "RSA-OAEP",
+		},
+		privateKey,
+		base64ToByte(cipherText)
+	);
+	return byteToStr(decrypted);
+}
+
+/**
+ *
+ * @description 私钥签名
+ * @param message
+ * @param name
+ * @param privateKey
+ * @param length
+ * @returns base64 编码后的结果
+ */
+export async function signRsa<T extends RsaSignVerifyTypes>(
+	message: string,
+	name: T,
+	privateKey: CryptoKey,
+	length: RsaPssParameter<T>
+): Promise<string> {
+	if (name == "RSA-PSS") {
+		const encoded = strToByte(message);
+		const signature = await window.crypto.subtle.sign(
+			{
+				name: name,
+				saltLength: length,
+			},
+			privateKey,
+			encoded
+		);
+		return byteToBase64(signature);
+	}
+	if (name == "RSASSA-PKCS1-v1_5") {
+		const encoded = strToByte(message);
+		const signature = await window.crypto.subtle.sign(name, privateKey, encoded);
+		return byteToBase64(signature);
+	}
+	return "";
+}
+
+/**
+ *
+ * @description 公钥验证
+ * @param message
+ * @param sign base64值
+ * @param name
+ * @param publicKey
+ * @param length
+ * @returns
+ */
+export async function verifyRsa<T extends RsaSignVerifyTypes>(
+	message: string,
+	sign: string,
+	name: T,
+	publicKey: CryptoKey,
+	length: RsaPssParameter<T>
+): Promise<boolean> {
+	if (name == "RSA-PSS") {
+		const encoded = strToByte(message);
+		const signature = base64ToByte(sign);
+		const result = await window.crypto.subtle.verify(
+			{
+				name: name,
+				saltLength: length,
+			},
+			publicKey,
+			signature,
+			encoded
+		);
+		return result;
+	}
+	if (name == "RSASSA-PKCS1-v1_5") {
+		const encoded = strToByte(message);
+		const signature = base64ToByte(sign);
+		const result = await window.crypto.subtle.verify(name, publicKey, signature, encoded);
+		return result;
+	}
+	return false;
+}
