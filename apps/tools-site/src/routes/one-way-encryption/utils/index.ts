@@ -23,7 +23,7 @@ export const CryptoOneWayEncryption = (
 	outCodeType: FormatType,
 	text: string
 ): string => {
-	// test().then();
+	test().then();
 	switch (type) {
 		case OneWayEncryptionType.MD5:
 			return CryptoJS.MD5(
