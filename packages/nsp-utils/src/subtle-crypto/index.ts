@@ -10,3 +10,7 @@ export * from "./rsa-crypto";
 // deriveBits ECDH HKDF PBKDF2
 // wrapKey RSA-OAEP AES-CTR AES-CBC AES-GCM AES-KW
 // unwrapKey RSA-OAEP AES-CTR AES-CBC AES-GCM AES-KW
+
+namespace NspSubtleCrypto {}
+
+export default NspSubtleCrypto;

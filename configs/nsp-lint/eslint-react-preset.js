@@ -23,7 +23,7 @@ module.exports = {
 		],
 		"@typescript-eslint/no-explicit-any": [1],
 		"react/jsx-no-target-blank": [0],
-		"@typescript-eslint/no-namespace": "off",
+		"@typescript-eslint/no-namespace": ["off"],
 	},
 	settings: {
 		react: {
