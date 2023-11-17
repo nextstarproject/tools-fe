@@ -1,4 +1,11 @@
-import { base64ToByte, byteToBase64, byteToHex, byteToStr, hashAlgorithm } from "./normal";
+import {
+	base64ToByte,
+	byteToBase64,
+	byteToHex,
+	byteToStr,
+	hashAlgorithm,
+	strToByte,
+} from "./normal";
 
 export type GenerateKeyAlgorithm =
 	| RsaHashedKeyGenParams
@@ -42,7 +49,6 @@ export async function generateRsaKey(
 	extractable: boolean = true,
 	keyUsages: ReadonlyArray<KeyUsage> = ["decrypt", "encrypt"]
 ): Promise<CryptoKeyPair> {
-	console.log(modulusLength, hash, name, extractable, keyUsages);
 	const result = await window.crypto.subtle.generateKey(
 		{
 			name: name,
@@ -58,16 +64,14 @@ export async function generateRsaKey(
 
 export async function exportPrivateKey(key: CryptoKey) {
 	const exported = await window.crypto.subtle.exportKey("pkcs8", key);
-	const exportedAsString = byteToStr(exported);
-	const exportedAsBase64 = window.btoa(exportedAsString);
+	const exportedAsBase64 = byteToBase64(exported);
 	const pemExported = `-----BEGIN PRIVATE KEY-----\n${exportedAsBase64}\n-----END PRIVATE KEY-----`;
 	return pemExported;
 }
 
 export async function exportPublicKey(key: CryptoKey) {
 	const exported = await window.crypto.subtle.exportKey("spki", key);
-	const exportedAsString = byteToStr(exported);
-	const exportedAsBase64 = window.btoa(exportedAsString);
+	const exportedAsBase64 = byteToBase64(exported);
 	const pemExported = `-----BEGIN PUBLIC KEY-----\n${exportedAsBase64}\n-----END PUBLIC KEY-----`;
 	return pemExported;
 }
@@ -84,8 +88,7 @@ export async function exportJwtKey(key: CryptoKey) {
  * @returns
  */
 export async function encryptRSAOAEP(message: string, key: CryptoKey): Promise<string> {
-	const enc = new TextEncoder();
-	const encoded = enc.encode(message);
+	const encoded = strToByte(message);
 	const cipherText = await window.crypto.subtle.encrypt(
 		{
 			name: "RSA-OAEP",
@@ -110,6 +113,5 @@ export async function decryptRSAOAEP(cipherText: string, key: CryptoKey): Promis
 		key,
 		base64ToByte(cipherText)
 	);
-	const dec = new TextDecoder();
-	return dec.decode(decrypted);
+	return byteToStr(decrypted);
 }

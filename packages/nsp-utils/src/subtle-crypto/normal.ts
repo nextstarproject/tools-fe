@@ -1,203 +1,160 @@
 /**
- * @description ArrayBuffer 转为 Base64
+ * @description ArrayBuffer to Base64
  * @param byte
  * @returns
+ * @link https://stackoverflow.com/a/9458996/18639839
  * @example
  *
  * ```
- * base64ToByte('aGVsbG8=')
+ * byteToBase64(new Uint8Array([127,142,122]))
  * ```
  *
  * output
  *
- * => '68656c6c6f'
+ * => 'f456'
  */
 export const byteToBase64 = (byte: ArrayBuffer): string => {
-	const key = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-	const bytes = new Uint8Array(byte);
-	let newBase64 = "";
-	let currentChar = 0;
-	for (let i = 0; i < bytes.length; i++) {
-		// Go over three 8-bit bytes to encode four base64 6-bit chars
-		if (i % 3 === 0) {
-			// First Byte
-			currentChar = bytes[i] >> 2; // First 6-bits for first base64 char
-			newBase64 += key[currentChar]; // Add the first base64 char to the string
-			currentChar = (bytes[i] << 4) & 63; // Erase first 6-bits, add first 2 bits for second base64 char
-		}
-		if (i % 3 === 1) {
-			// Second Byte
-			currentChar += bytes[i] >> 4; // Concat first 4-bits from second byte for second base64 char
-			newBase64 += key[currentChar]; // Add the second base64 char to the string
-			currentChar = (bytes[i] << 2) & 63; // Add two zeros, add 4-bits from second half of second byte
-		}
-		if (i % 3 === 2) {
-			// Third Byte
-			currentChar += bytes[i] >> 6; // Concat first 2-bits of third byte for the third base64 char
-			newBase64 += key[currentChar]; // Add the third base64 char to the string
-			currentChar = bytes[i] & 63; // Add last 6-bits from third byte for the fourth base64 char
-			newBase64 += key[currentChar]; // Add the fourth base64 char to the string
-		}
+	let binary = "";
+	const byteList = new Uint8Array(byte);
+	const len = byteList.byteLength;
+	for (let i = 0; i < len; i++) {
+		binary += String.fromCharCode(byteList[i]);
 	}
-	if (bytes.length % 3 === 1) {
-		// Pad for two missing bytes
-		newBase64 += `${key[currentChar]}==`;
-	}
-	if (bytes.length % 3 === 2) {
-		// Pad one missing byte
-		newBase64 += `${key[currentChar]}=`;
-	}
-	return newBase64;
+	return window.btoa(binary);
 };
 
 /**
- * @description Base64 转为 ArrayBuffer
+ * @description Base64 to ArrayBuffer
  * @param base64
  * @returns
+ * @link https://stackoverflow.com/a/21797381/18639839
  * @example
  *
  * ```
- * base64ToByte('aGVsbG8=')
+ * base64ToByte("f456")
  * ```
  *
  * output
  *
- * hell   => 104 101 108 108         => aGVsbA==
- * hello  => 104 101 108 108 111     => aGVsbG8=
- * hellos => 104 101 108 108 111 115 => aGVsbG9z
+ * {
+ *   "0": 127,
+ *   "1": 142,
+ *   "2": 122
+ * }
  *
  */
-export const base64ToByte = (base64: string) => {
-	const key = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-	const newBytes = [];
-	let currentChar = 0;
-	let currentByte = 0;
-	for (let i = 0; i < base64.length; i++) {
-		// Go over four 6-bit base64 chars to decode into three 8-bit bytes
-		currentChar = key.indexOf(base64[i]);
-		if (i % 4 === 0) {
-			// First base64 char
-			currentByte = currentChar << 2; // Get the 6-bits from first base64 char
-		}
-		if (i % 4 === 1) {
-			// Second base64 char
-			currentByte += currentChar >> 6; // Concat the first 2-bits from second base64 char
-			newBytes.push(currentByte); // Push the first byte
-			currentByte = (currentChar & 15) << 4; // Erase bits before last 4-bits, add last 4-bits for second byte
-		}
-		if (i % 4 === 2) {
-			// Third base64 char
-			currentByte += currentChar >> 2; // Concat first 4-bits from third base64 char for second byte
-			newBytes.push(currentByte); // Push second byte
-			currentByte = (currentChar & 3) << 6; // Erase bits before last 2-bits, add last 2-bits for third byte
-		}
-		if (i % 4 === 3) {
-			// Fourth base64 char
-			currentByte += currentChar; // Concat fourth base64 char for third byte
-			newBytes.push(currentByte); // Push third byte
-		}
+export const base64ToByte = (base64: string): ArrayBuffer => {
+	const binaryString = atob(base64);
+	const byteList = new Uint8Array(binaryString.length);
+	for (let i = 0; i < binaryString.length; i++) {
+		byteList[i] = binaryString.charCodeAt(i);
 	}
-	if (newBytes[newBytes.length - 1] === -1) {
-		// Remove single padding from the end (=)
-		newBytes.pop();
-	}
-	if (newBytes[newBytes.length - 2] === -1) {
-		// Remove double padding from the end (==)
-		newBytes.pop();
-		newBytes.pop();
-	}
-	return new Uint8Array(newBytes);
+	return byteList.buffer;
 };
 
 /**
- * @description String 转为 ArrayBuffer
+ * @description String to ArrayBuffer
  * @param str
  * @returns
- */
-export function strToByte(str: string): ArrayBuffer {
-	const byteArray = new Uint8Array(str.length);
-	for (let i = 0; i < str.length; i++) {
-		byteArray[i] = str.codePointAt(i) as number;
-	}
-	return byteArray;
-}
-
-/**
- * @description ArrayBuffer 转为 String
- * @param byte
- * @returns
- */
-export function byteToStr(byte: ArrayBuffer) {
-	const bytes = new Uint8Array(byte);
-	let byteString = "";
-	for (let i = 0; i < bytes.byteLength; i++) {
-		byteString += String.fromCharCode(bytes[i]);
-	}
-	return byteString;
-}
-
-/**
- * @description ArrayBuffer 转为 Hex
- * @param byte
- * @returns
+ * @link https://stackoverflow.com/a/37902334/18639839
  * @example
  *
  * ```
- * byteToBase64([104,101,108,108,111])
+ * strToByte("SpiritLing")
  * ```
- *
  * output
+ * =>
+ * {
+ *   "0": 83,
+ *   "1": 112,
+ *   "2": 105,
+ *   "3": 114,
+ *   "4": 105,
+ *   "5": 116,
+ *   "6": 76,
+ *   "7": 105,
+ *   "8": 110,
+ *   "9": 103
+ * }
  *
- * => 'aGVsbG8='
  */
-export const byteToHex = (byte: ArrayBuffer) => {
-	const key = "0123456789abcdef";
-	const bytes = new Uint8Array(byte);
-	let newHex = "";
-	let currentChar = 0;
-	for (let i = 0; i < bytes.length; i++) {
-		// Go over each 8-bit byte
-		currentChar = bytes[i] >> 4; // First 4-bits for first hex char
-		newHex += key[currentChar]; // Add first hex char to string
-		currentChar = bytes[i] & 15; // Erase first 4-bits, get last 4-bits for second hex char
-		newHex += key[currentChar]; // Add second hex char to string
-	}
-	return newHex;
+export const strToByte = (str: string): ArrayBuffer => {
+	const enc = new TextEncoder();
+	return enc.encode(str);
 };
 
 /**
- * @description ArrayBuffer 转为 Hex
- * @param hex
+ * @description ArrayBuffer to String
+ * @param byte
  * @returns
+ * @link https://stackoverflow.com/a/37902334/18639839
  * @example
  *
  * ```
- * hexToByte('68656c6c6f')
+ * byteToStr(new Uint8Array([83,112,105,114,105,116,76,105,110,103]))
+ * ```
+ * output
+ * => "SpiritLing"
+ *
+ */
+export const byteToStr = (byte: ArrayBuffer): string => {
+	const bytes = new Uint8Array(byte);
+	const enc = new TextDecoder("utf-8");
+	return enc.decode(bytes);
+};
+
+/**
+ * @description ArrayBuffer to Hex
+ * @param byte
+ * @returns
+ * @link https://stackoverflow.com/a/40031979/18639839
+ * @example
+ *
+ * ```
+ * byteToBase64(new Uint8Array([ 4, 8, 12, 16 ]))
  * ```
  *
  * output
  *
- * => [104, 101, 108, 108, 111]
+ * => '04080c10'
  */
-export const hexToByte = (hex: string) => {
-	const key = "0123456789abcdef";
-	const newBytes = [];
-	let currentChar = 0;
-	let currentByte = 0;
-	for (let i = 0; i < hex.length; i++) {
-		// Go over two 4-bit hex chars to convert into one 8-bit byte
-		currentChar = key.indexOf(hex[i]);
-		if (i % 2 === 0) {
-			// First hex char
-			currentByte = currentChar << 4; // Get 4-bits from first hex char
-		}
-		if (i % 2 === 1) {
-			// Second hex char
-			currentByte += currentChar; // Concat 4-bits from second hex char
-			newBytes.push(currentByte); // Add byte
-		}
-	}
-	return new Uint8Array(newBytes);
+export const byteToHex = (byte: ArrayBuffer): string => {
+	return [...new Uint8Array(byte)].map((x) => x.toString(16).padStart(2, "0")).join("");
+};
+
+/**
+ * @description Hex to ArrayBuffer
+ * @param hex
+ * @returns
+ * @link https://stackoverflow.com/a/43131635/18639839
+ * @example
+ *
+ * ```
+ * hexToByte('AA5504B10000B5')
+ * ```
+ *
+ * output
+ *
+ * {
+ * "0": 170,
+ * "1": 85,
+ * "2": 4,
+ * "3": 177,
+ * "4": 0,
+ * "5": 0,
+ * "6": 181
+ * }
+ */
+export const hexToByte = (hex: string): ArrayBuffer => {
+	const splitHex = hex.match(/[\da-f]{2}/gi) as string[];
+
+	const typedArray = new Uint8Array(
+		splitHex.map(function (h) {
+			return parseInt(h, 16);
+		})
+	);
+
+	return typedArray.buffer;
 };
 
 export type hashAlgorithm = "SHA-256" | "SHA-384" | "SHA-512";
