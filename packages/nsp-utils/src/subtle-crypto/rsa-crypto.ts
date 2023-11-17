@@ -1,11 +1,4 @@
-import {
-	base64ToByte,
-	byteToBase64,
-	byteToHex,
-	byteToStr,
-	hashAlgorithm,
-	strToByte,
-} from "./normal";
+import { base64ToByte, byteToBase64, byteToStr, hashAlgorithm, strToByte } from "./normal";
 
 export type GenerateKeyAlgorithm =
 	| RsaHashedKeyGenParams
@@ -76,7 +69,7 @@ export async function exportPublicKey(key: CryptoKey) {
 	return pemExported;
 }
 
-export async function exportJwtKey(key: CryptoKey) {
+export async function exportJwtPrivateKey(key: CryptoKey) {
 	const exported = await window.crypto.subtle.exportKey("jwk", key);
 	return exported;
 }
@@ -115,3 +108,91 @@ export async function decryptRSAOAEP(cipherText: string, key: CryptoKey): Promis
 	);
 	return byteToStr(decrypted);
 }
+
+export async function importPrivateKey(
+	pem: string,
+	modulusLength: number = 2048,
+	hash: hashAlgorithm = "SHA-256",
+	name: RsaHashedKeyGenName = "RSA-OAEP",
+	extractable: boolean = true,
+	keyUsages: ReadonlyArray<KeyUsage> = ["decrypt"]
+) {
+	// fetch the part of the PEM string between header and footer
+	const pemHeader = "-----BEGIN PRIVATE KEY-----";
+	const pemFooter = "-----END PRIVATE KEY-----";
+	const pemContents = pem.substring(pemHeader.length, pem.length - pemFooter.length);
+	// base64 decode the string to get the binary data
+	const binaryDerString = window.atob(pemContents);
+	// convert from a binary string to an ArrayBuffer
+	const binaryDer = strToByte(binaryDerString);
+
+	return window.crypto.subtle.importKey(
+		"pkcs8",
+		binaryDer,
+		{
+			name: name,
+			modulusLength: modulusLength,
+			publicExponent: new Uint8Array([1, 0, 1]),
+			hash: hash,
+		} as RsaHashedImportParams,
+		extractable,
+		keyUsages
+	);
+}
+
+export async function importPublicKey(
+	pem: string,
+	modulusLength: number = 2048,
+	hash: hashAlgorithm = "SHA-256",
+	name: RsaHashedKeyGenName = "RSA-OAEP",
+	extractable: boolean = true,
+	keyUsages: ReadonlyArray<KeyUsage> = ["encrypt"]
+) {
+	// 获取 PEM 字符串在头部和尾部之间的部分
+	const pemHeader = "-----BEGIN PUBLIC KEY-----";
+	const pemFooter = "-----END PUBLIC KEY-----";
+	const pemContents = pem.substring(pemHeader.length, pem.length - pemFooter.length);
+	// 将字符串通过 base64 解码为二进制数据
+	const binaryDerString = window.atob(pemContents);
+	// 将二进制字符串转换为 ArrayBuffer
+	const binaryDer = strToByte(binaryDerString);
+
+	return window.crypto.subtle.importKey(
+		"spki",
+		binaryDer,
+		{
+			name: name,
+			modulusLength: modulusLength,
+			publicExponent: new Uint8Array([1, 0, 1]),
+			hash: hash,
+		} as RsaHashedImportParams,
+		extractable,
+		keyUsages
+	);
+}
+
+export const importJwtPrivateKey = async (
+	jwk: JsonWebKey,
+	modulusLength: number = 2048,
+	hash: hashAlgorithm = "SHA-256",
+	name: RsaHashedKeyGenName = "RSA-OAEP",
+	extractable: boolean = true,
+	keyUsages: ReadonlyArray<KeyUsage> = ["encrypt"]
+): Promise<CryptoKey> => {
+	return window.crypto.subtle.importKey(
+		"jwk",
+		jwk,
+		{
+			name: name,
+			modulusLength: modulusLength,
+			publicExponent: new Uint8Array([1, 0, 1]),
+			hash: hash,
+		} as RsaHashedImportParams,
+		extractable,
+		keyUsages
+	);
+};
+
+export const RsaSubtleCrypto = {
+	importJwtPrivateKey,
+};
