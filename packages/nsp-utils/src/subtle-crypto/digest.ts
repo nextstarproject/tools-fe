@@ -1,6 +1,6 @@
-import { byteToBase64, byteToHex } from "./normal";
+import { HashAlgorithm, byteToBase64, byteToHex } from "./normal";
 
-export type DigestAlgorithm = "SHA-1" | "SHA-256" | "SHA-384" | "SHA-512";
+export type DigestHashAlgorithm = "SHA-1" | HashAlgorithm;
 
 /**
  * @description 生成给定数据的摘要
@@ -19,7 +19,7 @@ export type DigestAlgorithm = "SHA-1" | "SHA-256" | "SHA-384" | "SHA-512";
  */
 export async function digestMessageHex(
 	message: string,
-	algorithm: DigestAlgorithm
+	algorithm: DigestHashAlgorithm
 ): Promise<string> {
 	const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
 	const hashBuffer = await crypto.subtle.digest(algorithm, msgUint8); // hash the message
@@ -44,7 +44,7 @@ export async function digestMessageHex(
  */
 export async function digestMessageBase64(
 	message: string,
-	algorithm: DigestAlgorithm
+	algorithm: DigestHashAlgorithm
 ): Promise<string> {
 	const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
 	const hashBuffer = await crypto.subtle.digest(algorithm, msgUint8); // hash the message

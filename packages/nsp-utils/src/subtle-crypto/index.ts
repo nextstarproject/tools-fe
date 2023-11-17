@@ -1,4 +1,4 @@
-import * as digest from "./one-way-encryption";
+import * as digest from "./digest";
 import * as normal from "./normal";
 import * as rsaCrypto from "./rsa-crypto";
 import * as ecdsaCrypto from "./ecdsa-crypto";
