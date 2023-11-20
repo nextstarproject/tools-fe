@@ -9,15 +9,6 @@ import {
 	WrapUnwrapKeyUsages,
 } from "./normal";
 
-// encrypt RSA-OAEP AES-CTR AES-CBC AES-GCM
-// decrypt RSA-OAEP AES-CTR AES-CBC AES-GCM
-// sign RSASSA-PKCS1-v1_5 RSA-PSS ECDSA HMAC
-// verify RSASSA-PKCS1-v1_5 RSA-PSS ECDSA HMAC
-// deriveKey ECDH HKDF PBKDF2
-// deriveBits ECDH HKDF PBKDF2
-// wrapKey RSA-OAEP AES-CTR AES-CBC AES-GCM AES-KW
-// unwrapKey RSA-OAEP AES-CTR AES-CBC AES-GCM AES-KW
-
 export type RsaPssTypes = "RSA-PSS";
 export type RsaPkcs1Type = "RSASSA-PKCS1-v1_5";
 
@@ -43,7 +34,7 @@ export type RsaKeyUsages<T extends RsaKeyTypes> = T extends
  * @param keyUsages 使用范围
  * @returns
  */
-export async function generateRsaKey<T extends RsaKeyTypes>(
+export async function generateKey<T extends RsaKeyTypes>(
 	name: T,
 	keyUsages: ReadonlyArray<RsaKeyUsages<T>>,
 	modulusLength: number = 2048,
@@ -168,12 +159,12 @@ export async function importJwtPrivateKey<T extends RsaKeyTypes>(
 
 /**
  *
- * @description 公钥加密
+ * @description 公钥加密，只适合 RSA-OAEP
  * @param message
  * @param publicKey 公钥Key
  * @returns base64值
  */
-export async function encryptRsaOaep(message: string, publicKey: CryptoKey): Promise<string> {
+export async function encrypt(message: string, publicKey: CryptoKey): Promise<string> {
 	const encoded = strToByte(message);
 	const cipherText = await window.crypto.subtle.encrypt(
 		{
@@ -186,12 +177,12 @@ export async function encryptRsaOaep(message: string, publicKey: CryptoKey): Pro
 }
 
 /**
- * @description 私钥解密
+ * @description 私钥解密，只适合使用 RSA-OAEP
  * @param message
  * @param privateKey 私钥Key
  * @returns
  */
-export async function decryptRsaOaep(cipherText: string, privateKey: CryptoKey): Promise<string> {
+export async function decrypt(cipherText: string, privateKey: CryptoKey): Promise<string> {
 	const decrypted = await window.crypto.subtle.decrypt(
 		{
 			name: "RSA-OAEP",
@@ -204,14 +195,14 @@ export async function decryptRsaOaep(cipherText: string, privateKey: CryptoKey):
 
 /**
  *
- * @description 私钥签名
+ * @description 私钥签名，只适合 RSA-PSS 和 RSASSA-PKCS1-v1_5
  * @param message
  * @param name
  * @param privateKey
  * @param length
  * @returns base64 编码后的结果
  */
-export async function signRsa<T extends RsaSignVerifyTypes>(
+export async function sign<T extends RsaSignVerifyTypes>(
 	message: string,
 	name: T,
 	privateKey: CryptoKey,
@@ -239,7 +230,7 @@ export async function signRsa<T extends RsaSignVerifyTypes>(
 
 /**
  *
- * @description 公钥验证
+ * @description 公钥验证，只适合 RSA-PSS 和 RSASSA-PKCS1-v1_5
  * @param message
  * @param sign base64值
  * @param name
@@ -247,7 +238,7 @@ export async function signRsa<T extends RsaSignVerifyTypes>(
  * @param length
  * @returns
  */
-export async function verifyRsa<T extends RsaSignVerifyTypes>(
+export async function verify<T extends RsaSignVerifyTypes>(
 	message: string,
 	sign: string,
 	name: T,
