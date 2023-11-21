@@ -54,6 +54,7 @@ export default function ({ mode }) {
 					.padStart(2, "0")}`
 			),
 			_IS_DEV_: isDev,
+			_WHITE_DOMAIN_: JSON.stringify("tools.nextstar.space"),
 		},
 		server: {
 			port: 14001,
@@ -69,6 +70,18 @@ export default function ({ mode }) {
 						antd: ["antd"],
 						nsputils: ["nsp-utils"],
 						lodash: ["lodash"],
+						highlight: ["highlight.js"],
+						bytemd: ["bytemd", "@bytemd/react"],
+						"bytemd-plugins": [
+							"@bytemd/plugin-breaks",
+							"@bytemd/plugin-frontmatter",
+							"@bytemd/plugin-gemoji",
+							"@bytemd/plugin-gfm",
+							"@bytemd/plugin-highlight",
+							"@bytemd/plugin-math",
+							"@bytemd/plugin-medium-zoom",
+							"@bytemd/plugin-mermaid",
+						],
 					},
 				},
 			},

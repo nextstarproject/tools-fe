@@ -118,7 +118,7 @@ const LayoutLeftSidebar = (props: { prepare: boolean }) => {
 		<Layout.Sider
 			theme={globalState.theme.isDark ? "dark" : "light"}
 			width={256}
-			className={"h-full relative z-[100]"}
+			className={"h-full relative z-[100] monoFontFamily"}
 			style={{ backgroundColor: colorBgContainer }}
 			trigger={
 				<LayoutLeftSideBarTrigger

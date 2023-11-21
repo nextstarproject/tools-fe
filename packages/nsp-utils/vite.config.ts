@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import commonjs from "rollup-plugin-commonjs";
+import { terser } from "rollup-plugin-terser";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,8 +16,9 @@ export default defineConfig({
 	build: {
 		lib: {
 			entry: "src/index.ts",
-			formats: ["es"],
-			name: "nsp-utils",
+			formats: ["es", "iife", "umd"],
+			name: "nspUtils",
+			fileName: (format) => `nsp-utils.${format}.js`,
 		},
 		rollupOptions: {
 			external: ["react", "react-dom"],
@@ -24,6 +27,8 @@ export default defineConfig({
 				// in bloating sourcemaps with another copy of it.
 				sourcemapExcludeSources: true,
 			},
+			//@ts-ignore ignore rollup error
+			plugins: [commonjs(), terser()],
 		},
 		sourcemap: true,
 		// Reduce bloat from legacy polyfills.

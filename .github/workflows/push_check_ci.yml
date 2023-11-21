@@ -5,17 +5,20 @@ on:
     branches:
       - "feature/*" # matches feature branch
       - "bugfix/*" # matches bugfix branch
-      - "hotfix/*" # matches hotfix branch
+      - "hotfix/*" # matches hotfix branch+
+      - "release/**" # matches release branch
+      - "dev" # matches hotfix branch
+      - "master" # matches hotfix branch
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: [16.x]
+        node_version: [18.x]
         os: [ubuntu-latest, windows-latest, macOS-latest]
     name: Check (${{ matrix.node_version }}, ${{ matrix.os }}) push
     steps:

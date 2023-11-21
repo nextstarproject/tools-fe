@@ -8,7 +8,9 @@ const LayoutFooter = () => {
 	return (
 		<Layout.Footer
 			className="px-2 py-4 text-center shadow-inner"
-			style={{ backgroundColor: colorBgContainer }}
+			style={{
+				backgroundColor: colorBgContainer,
+			}}
 		>
 			<span>
 				Copyright © 2022-2023{" "}

@@ -14,6 +14,9 @@ import RsaRouter from "./rsa/router";
 import RandomStringRouter from "./random-string/router";
 import { UuidPageRouter } from "./uuid-page/router";
 import { ColorPageRouter } from "./color-page/router";
+import { TestPageRouter } from "./test-page/router";
+import { MarkdownPageRouter } from "./markdown-page/router";
+import { CopyBookPageRouter } from "./copybook/router";
 
 export type AppRouteObject = RouteObject & {
 	/**
@@ -59,6 +62,9 @@ const withPermissionPageRoutes: AppRouteObject[] = [
 	ContributorsRouter,
 	UuidPageRouter,
 	ColorPageRouter,
+	MarkdownPageRouter,
+	CopyBookPageRouter,
+	TestPageRouter,
 ];
 
 /**

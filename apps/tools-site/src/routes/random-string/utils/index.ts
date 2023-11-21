@@ -1,33 +1,16 @@
 import { ICryptoRandomStringOptions, RandomStringType } from "../types";
-import CryptoJS from "crypto-js";
-import { Buffer } from "buffer";
 
-const GenerateForCustomCharacters = (length: number, characters: string[]) => {
-	// Generating entropy is faster than complex math operations, so we use the simplest way
+const array = new Uint32Array(10);
+window.crypto.getRandomValues(array);
+
+const GenerateForCryptoRandom = (length: number, characters: string[]): string => {
+	const array = new Uint32Array(length);
+	window.crypto.getRandomValues(array);
 	const characterCount = characters.length;
-	const maxValidSelector = Math.floor(0x10000 / characterCount) * characterCount - 1; // Using values above this will ruin distribution when using modular division
-	const entropyLength = 2 * Math.ceil(1.1 * length); // Generating a bit more than required so chances we need more than one pass will be really low
 	let string = "";
-	let stringLength = 0;
-
-	while (stringLength < length) {
-		// In case we had many bad values, which may happen for character sets of size above 0x8000 but close to it
-		const entropy = Buffer.from(CryptoJS.lib.WordArray.random(entropyLength).toString());
-		let entropyPosition = 0;
-
-		while (entropyPosition < entropyLength && stringLength < length) {
-			const entropyValue = entropy.readUInt16LE(entropyPosition);
-			entropyPosition += 2;
-			if (entropyValue > maxValidSelector) {
-				// Skip values which will ruin distribution when using modular division
-				continue;
-			}
-
-			string += characters[entropyValue % characterCount];
-			stringLength++;
-		}
+	for (const num of array) {
+		string += characters[num % characterCount];
 	}
-
 	return string;
 };
 
@@ -58,37 +41,33 @@ export const CryptoRandomString = (options: ICryptoRandomStringOptions): string 
 	}
 
 	if (type === RandomStringType.UrlSafe) {
-		return GenerateForCustomCharacters(length, [
-			...CryptoRandomStringCharacters.urlSafeCharacters,
-		]);
+		return GenerateForCryptoRandom(length, [...CryptoRandomStringCharacters.urlSafeCharacters]);
 	}
 
 	if (type === RandomStringType.Numeric) {
-		return GenerateForCustomCharacters(length, [
-			...CryptoRandomStringCharacters.numericCharacters,
-		]);
+		return GenerateForCryptoRandom(length, [...CryptoRandomStringCharacters.numericCharacters]);
 	}
 
 	if (type === RandomStringType.Distinguishable) {
-		return GenerateForCustomCharacters(length, [
-			...CryptoRandomStringCharacters.alphanumericCharacters,
+		return GenerateForCryptoRandom(length, [
+			...CryptoRandomStringCharacters.distinguishableCharacters,
 		]);
 	}
 
 	if (type === RandomStringType.AsciiPrintable) {
-		return GenerateForCustomCharacters(length, [
-			...CryptoRandomStringCharacters.alphanumericCharacters,
+		return GenerateForCryptoRandom(length, [
+			...CryptoRandomStringCharacters.asciiPrintableCharacters,
 		]);
 	}
 
 	if (type === RandomStringType.Alphanumeric) {
-		return GenerateForCustomCharacters(length, [
+		return GenerateForCryptoRandom(length, [
 			...CryptoRandomStringCharacters.alphanumericCharacters,
 		]);
 	}
 
 	if (type === RandomStringType.Custom && characters != undefined) {
-		return GenerateForCustomCharacters(length, [...characters]);
+		return GenerateForCryptoRandom(length, [...characters]);
 	}
 	return "";
 };
@@ -114,13 +93,13 @@ export const RandomString = (options: ICryptoRandomStringOptions): string => {
 
 	if (type === RandomStringType.Distinguishable) {
 		return GenerateForNumberRandom(length, [
-			...CryptoRandomStringCharacters.alphanumericCharacters,
+			...CryptoRandomStringCharacters.distinguishableCharacters,
 		]);
 	}
 
 	if (type === RandomStringType.AsciiPrintable) {
 		return GenerateForNumberRandom(length, [
-			...CryptoRandomStringCharacters.alphanumericCharacters,
+			...CryptoRandomStringCharacters.asciiPrintableCharacters,
 		]);
 	}
 

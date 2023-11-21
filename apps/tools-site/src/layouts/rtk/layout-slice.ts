@@ -1,5 +1,6 @@
 import { MenuItem, Menus } from "@project-self/assets/consts/menus";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { ReleasesLatest, getReleasesLatest } from "./service";
 
 export interface ILastBreadcrumb {
 	replace?: boolean;
@@ -15,6 +16,7 @@ export interface ILayoutSliceState {
 	settingDrawer: boolean;
 	applicationDrawer: boolean;
 	breadcrumb?: ILastBreadcrumb;
+	latest: Nullable<ReleasesLatest>;
 }
 
 const initialState: ILayoutSliceState = {
@@ -22,6 +24,7 @@ const initialState: ILayoutSliceState = {
 	applicationDrawer: false,
 	settingDrawer: false,
 	breadcrumb: undefined,
+	latest: null,
 };
 
 export const layoutSlice = createSlice({
@@ -44,6 +47,11 @@ export const layoutSlice = createSlice({
 		setLastBreadcrumb: (state, action: PayloadAction<ILastBreadcrumb | undefined>) => {
 			state.breadcrumb = action.payload;
 		},
+	},
+	extraReducers: (builder) => {
+		builder.addCase(getReleasesLatest.fulfilled, (state, action) => {
+			state.latest = action.payload;
+		});
 	},
 });
 
