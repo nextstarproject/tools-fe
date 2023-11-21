@@ -1,5 +1,21 @@
+import { NspSubtleCrypto } from "nsp-utils";
 import { FormatType, OneWayEncryptionType } from "../types";
 import CryptoJS from "crypto-js";
+
+const { generateEcdsaKey, exportPrivateKey, exportPublicKey, signEcdsa, verifyEcdsa } =
+	NspSubtleCrypto.EcdsaCrypto;
+
+const test = async function () {
+	const key = await generateEcdsaKey("P-256", ["sign", "verify"]);
+	const privateKey = await exportPrivateKey(key.privateKey);
+	const publicKey = await exportPublicKey(key.publicKey);
+	console.log(privateKey);
+	console.log(publicKey);
+	const signText = await signEcdsa("123", key.privateKey);
+	console.log(signText);
+	const result = await verifyEcdsa("123", signText, key.publicKey);
+	console.log(result);
+};
 
 export const CryptoOneWayEncryption = (
 	type: OneWayEncryptionType,
@@ -7,6 +23,7 @@ export const CryptoOneWayEncryption = (
 	outCodeType: FormatType,
 	text: string
 ): string => {
+	test().then();
 	switch (type) {
 		case OneWayEncryptionType.MD5:
 			return CryptoJS.MD5(
