@@ -2,6 +2,7 @@ import * as digest from "./digest";
 import * as normal from "./normal";
 import * as rsaCrypto from "./rsa-crypto";
 import * as ecdsaCrypto from "./ecdsa-crypto";
+import * as hmacCrypto from "./hmac-crypto";
 
 // encrypt RSA-OAEP AES-CTR AES-CBC AES-GCM
 // decrypt RSA-OAEP AES-CTR AES-CBC AES-GCM
@@ -29,4 +30,8 @@ export namespace NspSubtleCrypto {
 	 * @description Ecdsa 相关方法和处理
 	 */
 	export import EcdsaCrypto = ecdsaCrypto;
+	/**
+	 * @description Hmac 相关方法和处理
+	 */
+	export import HmacCrypto = hmacCrypto;
 }
