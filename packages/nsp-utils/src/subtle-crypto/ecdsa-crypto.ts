@@ -2,9 +2,9 @@ import { HashAlgorithm, SignVerifyUsages, base64ToByte, byteToBase64, strToByte 
 
 export type EcdsaNamedCurve = "P-256" | "P-384" | "P-521";
 
-export async function generateEcdsaKey(
-	namedCurve: EcdsaNamedCurve,
-	keyUsages: ReadonlyArray<SignVerifyUsages>,
+export async function generateKey(
+	namedCurve: EcdsaNamedCurve = "P-256",
+	keyUsages: ReadonlyArray<SignVerifyUsages> = ["sign", "verify"],
 	extractable: boolean = true
 ): Promise<CryptoKeyPair> {
 	const result = await window.crypto.subtle.generateKey(
@@ -39,8 +39,8 @@ export async function exportJwtPrivateKey(key: CryptoKey) {
 
 export async function importPrivateKey(
 	pem: string,
-	namedCurve: EcdsaNamedCurve,
-	keyUsages: ReadonlyArray<SignVerifyUsages>,
+	namedCurve: EcdsaNamedCurve = "P-256",
+	keyUsages: ReadonlyArray<SignVerifyUsages> = ["sign", "verify"],
 	extractable: boolean = true
 ) {
 	// fetch the part of the PEM string between header and footer
@@ -66,8 +66,8 @@ export async function importPrivateKey(
 
 export async function importPublicKey(
 	pem: string,
-	namedCurve: EcdsaNamedCurve,
-	keyUsages: ReadonlyArray<SignVerifyUsages>,
+	namedCurve: EcdsaNamedCurve = "P-256",
+	keyUsages: ReadonlyArray<SignVerifyUsages> = ["sign", "verify"],
 	extractable: boolean = true
 ) {
 	// 获取 PEM 字符串在头部和尾部之间的部分
@@ -93,8 +93,8 @@ export async function importPublicKey(
 
 export async function importJwtPrivateKey(
 	jwk: JsonWebKey,
-	namedCurve: EcdsaNamedCurve,
-	keyUsages: ReadonlyArray<SignVerifyUsages>,
+	namedCurve: EcdsaNamedCurve = "P-256",
+	keyUsages: ReadonlyArray<SignVerifyUsages> = ["sign", "verify"],
 	extractable: boolean = true
 ): Promise<CryptoKey> {
 	return window.crypto.subtle.importKey(
@@ -118,7 +118,7 @@ export async function importJwtPrivateKey(
  * @param length
  * @returns base64 编码后的结果
  */
-export async function signEcdsa(
+export async function sign(
 	message: string,
 	privateKey: CryptoKey,
 	hash: HashAlgorithm = "SHA-256"
@@ -147,7 +147,7 @@ export async function signEcdsa(
  * @param length
  * @returns
  */
-export async function verifyEcdsa(
+export async function verify(
 	message: string,
 	sign: string,
 	publicKey: CryptoKey,
