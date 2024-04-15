@@ -141,6 +141,9 @@ const RootRoutes = () => {
 					path: location.pathname,
 				});
 			}
+			if (window.umami != undefined) {
+				window.umami.track("page_path_change");
+			}
 		}
 	}, [location]);
 	return useRoutes(getAppRoutes({ isLoggedIn: isLoggedIn }));

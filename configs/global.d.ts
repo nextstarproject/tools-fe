@@ -36,6 +36,11 @@ interface Window {
 	 * @description 用户指纹Id
 	 */
 	_FINGERPRINT_: string;
+
+	/**
+	 * @description umami 统计分析
+	 */
+	umami: any;
 }
 
 type Styling<T> = {

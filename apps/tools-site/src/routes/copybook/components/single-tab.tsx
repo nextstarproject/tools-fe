@@ -210,7 +210,7 @@ const SingleTab = () => {
 					/>
 				</Form.Item>
 				<Form.Item {...tailLayout}>
-					<Button type="primary" htmlType="submit">
+					<Button type="primary" htmlType="submit" data-umami-event="single-copybook">
 						生成字帖
 					</Button>
 				</Form.Item>
