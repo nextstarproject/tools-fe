@@ -31,7 +31,8 @@
     "UUID": "UUID",
     "Color": "颜色",
     "Markdown": "Markdown",
-    "CopyBook": "字帖"
+    "CopyBook": "字帖",
+    "CommitSpecification": "Commit 规范"
   },
   "Layout": {
     "Application": {

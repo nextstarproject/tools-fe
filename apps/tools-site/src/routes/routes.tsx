@@ -17,6 +17,7 @@ import { ColorPageRouter } from "./color-page/router";
 import { TestPageRouter } from "./test-page/router";
 import { MarkdownPageRouter } from "./markdown-page/router";
 import { CopyBookPageRouter } from "./copybook/router";
+import { CommitSpecificationRouter } from "./commit-specification/router";
 
 export type AppRouteObject = RouteObject & {
 	/**
@@ -64,6 +65,7 @@ const withPermissionPageRoutes: AppRouteObject[] = [
 	ColorPageRouter,
 	MarkdownPageRouter,
 	CopyBookPageRouter,
+	CommitSpecificationRouter,
 	TestPageRouter,
 ];
 

@@ -31,7 +31,8 @@
     "UUID": "UUID",
     "Color": "Color",
     "Markdown": "Markdown",
-    "CopyBook": "Copy Book"
+    "CopyBook": "Copy Book",
+    "CommitSpecification": "Commit Specification"
   },
   "Layout": {
     "Application": {
