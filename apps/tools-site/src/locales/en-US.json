@@ -115,5 +115,23 @@
   },
   "CopyBookPage": {
     "ChineseTips": "This page is for Chinese characters, other languages are not supported."
+  },
+  "CommitSpecification": {
+    "GridFullColumn": "Full",
+    "GirdColorColumn": "Color",
+    "GridDescriptionColumn": "Description",
+    "CreateFormButtonText": "Creating a New Submission",
+    "FormCopied": "Copy Success",
+    "FormClipboardNotSupport": "Current browser does not support clipboard, please copy it manually.",
+    "FormCopyText": "Copy",
+    "FormTypeLabel": "Type",
+    "FormScopeLabel": "Scope",
+    "FormDescriptionLabel": "Description",
+    "FormBodyLabel": "Body",
+    "FormFileNameLabel": "File Name",
+    "FormFileExtensionLabel": "File Extension Name",
+    "FormDynamicCopyTooltip": "Copy this item to the end",
+    "FormDynamicDeleteTooltip": "Don't need this business anymore.",
+    "FromTypeTips": "Please select or enter a type"
   }
 }
