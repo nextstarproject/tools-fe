@@ -32,7 +32,8 @@
     "Color": "Color",
     "Markdown": "Markdown",
     "CopyBook": "Copy Book",
-    "CommitSpecification": "Commit Specification"
+    "CommitSpecification": "Commit Specification",
+    "JsonFormat": "Json Format"
   },
   "Layout": {
     "Application": {

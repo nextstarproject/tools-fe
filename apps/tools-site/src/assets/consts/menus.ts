@@ -116,6 +116,43 @@ export const BusinessMenus: MenuItem[] = [
 		],
 	},
 	{
+		id: 100400,
+		name: "Menu.DeveloperTools.Index",
+		i18n: {
+			"zh-CN": "开发工具",
+			"en-US": "Developer Tools",
+		},
+		icon: "nsp-code-copy",
+		path: null,
+		permission: null,
+		children: [
+			{
+				id: 100401,
+				name: "Menu.Unclassified.CommitSpecification",
+				i18n: {
+					"zh-CN": "Commit 规范",
+					"en-US": "Commit Specification",
+				},
+				icon: "nsp-code-copy",
+				path: "/dt/commit-specification",
+				permission: null,
+				children: null,
+			},
+			{
+				id: 100402,
+				name: "Menu.Unclassified.JsonFormat",
+				i18n: {
+					"zh-CN": "Json 格式化",
+					"en-US": "Json Format",
+				},
+				icon: "nsp-code-copy",
+				path: "/dt/json-format",
+				permission: null,
+				children: null,
+			},
+		],
+	},
+	{
 		id: 100300,
 		name: "Menu.Unclassified.Index",
 		i18n: {
@@ -159,18 +196,6 @@ export const BusinessMenus: MenuItem[] = [
 				},
 				icon: "nsp-file-common",
 				path: "/unclassified/copybook",
-				permission: null,
-				children: null,
-			},
-			{
-				id: 100304,
-				name: "Menu.Unclassified.CommitSpecification",
-				i18n: {
-					"zh-CN": "Commit 规范",
-					"en-US": "Commit Specification",
-				},
-				icon: "nsp-file-common",
-				path: "/unclassified/commit-specification",
 				permission: null,
 				children: null,
 			},

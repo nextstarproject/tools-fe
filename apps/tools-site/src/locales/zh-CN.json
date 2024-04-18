@@ -32,7 +32,8 @@
     "Color": "颜色",
     "Markdown": "Markdown",
     "CopyBook": "字帖",
-    "CommitSpecification": "Commit 规范"
+    "CommitSpecification": "Commit 规范",
+    "JsonFormat": "Json 格式化"
   },
   "Layout": {
     "Application": {

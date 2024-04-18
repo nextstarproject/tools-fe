@@ -6,7 +6,7 @@ const CommitSpecification = React.lazy(() => import("./index"));
 
 export const CommitSpecificationRouter: AppRouteObject = {
 	title: "Route.CommitSpecification",
-	path: "/unclassified/commit-specification",
+	path: "/dt/commit-specification",
 	element: <LazyImportComponent lazyChildren={CommitSpecification} />,
 	permission: [],
 };
