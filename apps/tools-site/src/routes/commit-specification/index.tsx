@@ -6,13 +6,14 @@ import { Languages, useTranslation } from "nsp-i18n";
 import { selectGlobalState } from "@project-self/store/selector";
 import { ReactNode } from "react";
 import _ from "lodash";
-import { useBoolean } from "ahooks";
+import { useBoolean, useSize } from "ahooks";
 import SpecificationCreateForm from "./components/create-form";
 
 const CommitSpecification = () => {
 	const [modalStatus, modalStatusAction] = useBoolean(false);
 	const globalState = useAppSelector(selectGlobalState);
 	const { t } = useTranslation();
+	const size = useSize(document.querySelector("body"));
 	const columnGenerate = (i18n: Languages): ProColumns<SpecificationType>[] => {
 		return [
 			{
@@ -82,9 +83,10 @@ const CommitSpecification = () => {
 				// 		},
 				// 	},
 				// }}
-				tableStyle={{ minHeight: "500px" }}
 				columns={columnGenerate(globalState.language)}
-				scroll={{ x: 400, y: 460 }}
+				scroll={{
+					y: size?.height == undefined ? 460 : size?.height - 169 - 237 - 20,
+				}}
 				request={async (params, sorter, filter) => {
 					const scopeKeyword = params["type"];
 					let newSpecifications: SpecificationType[] = _.sortBy(
