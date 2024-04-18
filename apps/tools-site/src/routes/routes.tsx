@@ -17,6 +17,7 @@ import { ColorPageRouter } from "./color-page/router";
 import { TestPageRouter } from "./test-page/router";
 import { MarkdownPageRouter } from "./markdown-page/router";
 import { CopyBookPageRouter } from "./copybook/router";
+import { CommitSpecificationRouter } from "./commit-specification/router";
 
 export type AppRouteObject = RouteObject & {
 	/**
@@ -64,6 +65,7 @@ const withPermissionPageRoutes: AppRouteObject[] = [
 	ColorPageRouter,
 	MarkdownPageRouter,
 	CopyBookPageRouter,
+	CommitSpecificationRouter,
 	TestPageRouter,
 ];
 
@@ -140,6 +142,9 @@ const RootRoutes = () => {
 				window._googleTag("event", "page_path_change", {
 					path: location.pathname,
 				});
+			}
+			if (window.umami != undefined) {
+				window.umami.track("page_path_change");
 			}
 		}
 	}, [location]);

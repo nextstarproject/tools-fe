@@ -162,6 +162,18 @@ export const BusinessMenus: MenuItem[] = [
 				permission: null,
 				children: null,
 			},
+			{
+				id: 100304,
+				name: "Menu.Unclassified.CommitSpecification",
+				i18n: {
+					"zh-CN": "Commit 规范",
+					"en-US": "Commit Specification",
+				},
+				icon: "nsp-file-common",
+				path: "/unclassified/commit-specification",
+				permission: null,
+				children: null,
+			},
 		],
 	},
 ];

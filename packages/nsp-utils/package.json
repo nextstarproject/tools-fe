@@ -20,11 +20,11 @@
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.9.7",
-    "@types/lodash": "^4.14.201",
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
-    "@vitejs/plugin-react": "^4.1.1",
-    "axios": "^1.6.2",
+    "@types/lodash": "^4.17.0",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "@vitejs/plugin-react": "^4.2.1",
+    "axios": "^1.6.8",
     "lodash": "^4.17.21",
     "nsp-lint": "workspace:^",
     "react": "^18.2.0",
@@ -34,10 +34,10 @@
     "typedoc": "^0.24.8",
     "typedoc-github-wiki-theme": "^1.1.0",
     "typedoc-plugin-markdown": "^3.17.1",
-    "typescript": "^5.2.2",
-    "vite": "^4.5.0"
+    "typescript": "^5.4.5",
+    "vite": "^4.5.3"
   },
   "dependencies": {
-    "store2": "^2.14.2"
+    "store2": "^2.14.3"
   }
 }
