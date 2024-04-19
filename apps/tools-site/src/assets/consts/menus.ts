@@ -150,6 +150,18 @@ export const BusinessMenus: MenuItem[] = [
 				permission: null,
 				children: null,
 			},
+			{
+				id: 100403,
+				name: "Menu.Unclassified.CompareContent",
+				i18n: {
+					"zh-CN": "内容对比",
+					"en-US": "Compare Content",
+				},
+				icon: "nsp-code-copy",
+				path: "/dt/compare-content",
+				permission: null,
+				children: null,
+			},
 		],
 	},
 	{

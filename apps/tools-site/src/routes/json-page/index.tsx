@@ -9,10 +9,10 @@ import { useThrottleFn } from "ahooks";
 
 const JsonPage = () => {
 	const globalState = useAppSelector(selectGlobalState);
-	const [jsonStr, setJsonStr] = useState<string>(`{"123":"33"}`);
+	const [jsonStr, setJsonStr] = useState<string>(`{}`);
 	const [jsonObject, setJsonObject] = useState<object>({});
 	const {
-		token: { colorBgContainer, colorBgLayout, colorBorder },
+		token: { colorBgContainer },
 	} = theme.useToken();
 	const { run: handlerJsonParse } = useThrottleFn(
 		() => {
@@ -48,6 +48,7 @@ const JsonPage = () => {
 							backgroundColor: colorBgContainer,
 							height: "100%",
 						}}
+						name={false}
 						src={jsonObject}
 						collapsed={false}
 						displayObjectSize={true}

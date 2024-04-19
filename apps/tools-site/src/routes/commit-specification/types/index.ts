@@ -9,6 +9,8 @@ export type SpecificationFormType = {
 	issues: { key: string }[];
 };
 
+export const codeExtension: string[] = ["cs"];
+
 export const fileExtensions: { value: string }[] = [
 	{
 		value: ".cs",

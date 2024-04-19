@@ -19,6 +19,7 @@ import { MarkdownPageRouter } from "./markdown-page/router";
 import { CopyBookPageRouter } from "./copybook/router";
 import { CommitSpecificationRouter } from "./commit-specification/router";
 import { JsonPageRouter } from "./json-page/router";
+import { CompareContentRouter } from "./compare-content/router";
 
 export type AppRouteObject = RouteObject & {
 	/**
@@ -68,6 +69,7 @@ const withPermissionPageRoutes: AppRouteObject[] = [
 	CopyBookPageRouter,
 	CommitSpecificationRouter,
 	JsonPageRouter,
+	CompareContentRouter,
 	TestPageRouter,
 ];
 
