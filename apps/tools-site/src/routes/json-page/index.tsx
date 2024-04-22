@@ -1,16 +1,20 @@
 import Editor from "@monaco-editor/react";
-import { Alert, Col, Row, theme } from "antd";
+import { theme } from "antd";
 import ReactJson from "@microlink/react-json-view";
 import { useState } from "react";
 import { useAppSelector } from "@project-self/store/store";
 import { selectGlobalState } from "@project-self/store/selector";
 import logger from "@project-self/utils/logger";
-import { useThrottleFn } from "ahooks";
+import { useSize, useThrottleFn } from "ahooks";
+import { ProCard } from "@ant-design/pro-components";
+import { useTranslation } from "nsp-i18n";
 
 const JsonPage = () => {
 	const globalState = useAppSelector(selectGlobalState);
 	const [jsonStr, setJsonStr] = useState<string>(`{}`);
 	const [jsonObject, setJsonObject] = useState<object>({});
+	const size = useSize(document.querySelector("body"));
+	const { t } = useTranslation();
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
@@ -28,11 +32,16 @@ const JsonPage = () => {
 	);
 	return (
 		<section>
-			<Row className={"h-full"}>
-				<Col span={12}>
+			<ProCard
+				className={"h-full"}
+				title={t("JsonParse.Title")}
+				split={"vertical"}
+				bordered
+				headerBordered
+			>
+				<ProCard title={t("JsonParse.LeftTitle")} colSpan="50%">
 					<Editor
-						width={"100%"}
-						height={"100%"}
+						height={size?.height == undefined ? 460 : size?.height - 169 - 128}
 						theme={globalState.theme.isDark ? "vs-dark" : "light"}
 						defaultLanguage="json"
 						value={jsonStr}
@@ -41,12 +50,16 @@ const JsonPage = () => {
 							handlerJsonParse();
 						}}
 					/>
-				</Col>
-				<Col span={12}>
+				</ProCard>
+				<ProCard title={t("JsonParse.RightTitle")}>
 					<ReactJson
 						style={{
 							backgroundColor: colorBgContainer,
-							height: "100%",
+							width: "100%",
+							height: `${
+								size?.height == undefined ? 460 : size?.height - 169 - 128
+							}px`,
+							overflow: "auto",
 						}}
 						name={false}
 						src={jsonObject}
@@ -56,11 +69,8 @@ const JsonPage = () => {
 						collapseStringsAfterLength={false}
 						theme={globalState.theme.isDark ? "tomorrow" : "rjv-default"}
 					/>
-				</Col>
-				<Col span={24} className={"pt-2"}>
-					<Alert type={"info"} message={"错误JSON将不会解析到右边"} />
-				</Col>
-			</Row>
+				</ProCard>
+			</ProCard>
 		</section>
 	);
 };

@@ -139,5 +139,10 @@
   "CompareContent": {
     "Original": "原始语言",
     "Modified": "修改语言"
+  },
+  "JsonParse": {
+    "LeftTitle": "JSON原文",
+    "RightTitle": "JSON解析",
+    "Title": "错误的JSON将不会解析到右边"
   }
 }

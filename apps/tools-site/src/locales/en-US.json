@@ -139,5 +139,10 @@
   "CompareContent": {
     "Original": "Original",
     "Modified": "Modified"
+  },
+  "JsonParse": {
+    "LeftTitle": "Original JSON",
+    "RightTitle": "JSON Parsing",
+    "Title": "The error JSON will not be parsed to the right."
   }
 }
