@@ -28,6 +28,7 @@
     "@bytemd/plugin-mermaid": "^1.21.0",
     "@bytemd/react": "^1.21.0",
     "@fingerprintjs/fingerprintjs": "^3.4.2",
+    "@microlink/react-json-view": "^1.23.0",
     "@monaco-editor/react": "^4.6.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/browser": "^7.110.1",

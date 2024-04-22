@@ -32,7 +32,9 @@
     "Color": "Color",
     "Markdown": "Markdown",
     "CopyBook": "Copy Book",
-    "CommitSpecification": "Commit Specification"
+    "CommitSpecification": "Commit Specification",
+    "JsonFormat": "Json Format",
+    "CompareContent": "Compare Content"
   },
   "Layout": {
     "Application": {
@@ -133,5 +135,14 @@
     "FormDynamicCopyTooltip": "Copy this item to the end",
     "FormDynamicDeleteTooltip": "Don't need this business anymore.",
     "FromTypeTips": "Please select or enter a type"
+  },
+  "CompareContent": {
+    "Original": "Original",
+    "Modified": "Modified"
+  },
+  "JsonParse": {
+    "LeftTitle": "Original JSON",
+    "RightTitle": "JSON Parsing",
+    "Title": "The error JSON will not be parsed to the right."
   }
 }
