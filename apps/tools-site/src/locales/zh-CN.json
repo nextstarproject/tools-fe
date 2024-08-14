@@ -31,7 +31,10 @@
     "UUID": "UUID",
     "Color": "颜色",
     "Markdown": "Markdown",
-    "CopyBook": "字帖"
+    "CopyBook": "字帖",
+    "CommitSpecification": "Commit 规范",
+    "JsonFormat": "Json 格式化",
+    "CompareContent": "内容对比"
   },
   "Layout": {
     "Application": {
@@ -114,5 +117,32 @@
   },
   "CopyBookPage": {
     "ChineseTips": "此页面为汉字字帖，其他语言不支持。"
+  },
+  "CommitSpecification": {
+    "GridFullColumn": "完整",
+    "GirdColorColumn": "颜色",
+    "GridDescriptionColumn": "描述",
+    "CreateFormButtonText": "创建新提交信息",
+    "FormCopied": "复制成功",
+    "FormClipboardNotSupport": "当前浏览器不支持clipboard，请手动复制",
+    "FormCopyText": "复制",
+    "FormTypeLabel": "类型",
+    "FormScopeLabel": "范围",
+    "FormDescriptionLabel": "描述",
+    "FormBodyLabel": "详细描述",
+    "FormFileNameLabel": "文件名",
+    "FormFileExtensionLabel": "扩展名",
+    "FormDynamicCopyTooltip": "复制此项到末尾",
+    "FormDynamicDeleteTooltip": "不需要这行了",
+    "FromTypeTips": "请选择或输入类型"
+  },
+  "CompareContent": {
+    "Original": "原始语言",
+    "Modified": "修改语言"
+  },
+  "JsonParse": {
+    "LeftTitle": "JSON原文",
+    "RightTitle": "JSON解析",
+    "Title": "错误的JSON将不会解析到右边"
   }
 }

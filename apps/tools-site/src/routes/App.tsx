@@ -54,15 +54,15 @@ const App = () => {
 		}
 	}, [globalState.language]);
 
-	useBeforeUnload((event) => {
-		if (globalState.beforeUnload.status) {
-			event.stopPropagation();
-			// Cancel the event as stated by the standard.
-			event.preventDefault();
-			// Chrome requires returnValue to be set.
-			event.returnValue = "";
-		}
-	});
+	// useBeforeUnload((event) => {
+	// 	if (globalState.beforeUnload.status) {
+	// 		event.stopPropagation();
+	// 		// Cancel the event as stated by the standard.
+	// 		event.preventDefault();
+	// 		// Chrome requires returnValue to be set.
+	// 		event.returnValue = "";
+	// 	}
+	// });
 
 	return (
 		<ConfigProvider locale={globalState.language == "zh-CN" ? zhCN : enUS}>

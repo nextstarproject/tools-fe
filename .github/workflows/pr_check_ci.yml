@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: [18.x]
+        node_version: [20.x]
         os: [ubuntu-latest, windows-latest, macOS-latest]
     name: Check (${{ matrix.node_version }}, ${{ matrix.os }}) pr
     steps:

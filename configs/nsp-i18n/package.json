@@ -1,6 +1,6 @@
 {
   "name": "nsp-i18n",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "",
   "main": "index.ts",
   "scripts": {
@@ -10,14 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "i18next": "^23.2.11",
-    "react": "^18.2.0",
-    "react-i18next": "^13.0.2"
+    "i18next": "^23.12.3",
+    "react": "^18.3.1",
+    "react-i18next": "^13.5.0"
   },
   "peerDependencies": {
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "i18next-parser": "^8.3.0"
+    "i18next-parser": "^8.13.0"
   }
 }

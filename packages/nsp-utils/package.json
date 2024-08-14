@@ -1,7 +1,7 @@
 {
   "name": "nsp-utils",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.2.0",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "files": [
@@ -20,24 +20,24 @@
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.9.7",
-    "@types/lodash": "^4.14.201",
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
-    "@vitejs/plugin-react": "^4.1.1",
-    "axios": "^1.6.2",
+    "@types/lodash": "^4.17.7",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "axios": "^1.7.4",
     "lodash": "^4.17.21",
     "nsp-lint": "workspace:^",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-terser": "^7.0.2",
     "typedoc": "^0.24.8",
     "typedoc-github-wiki-theme": "^1.1.0",
     "typedoc-plugin-markdown": "^3.17.1",
-    "typescript": "^5.2.2",
-    "vite": "^4.5.0"
+    "typescript": "^5.5.4",
+    "vite": "^4.5.3"
   },
   "dependencies": {
-    "store2": "^2.14.2"
+    "store2": "^2.14.3"
   }
 }

@@ -139,7 +139,6 @@ const ArticleTab = () => {
 					rules={[{ required: true, message: "请输入字帖内容" }]}
 				>
 					<Input.TextArea
-						className={"scroll-common"}
 						allowClear
 						rows={16}
 						showCount={{
@@ -154,7 +153,7 @@ const ArticleTab = () => {
 					/>
 				</Form.Item>
 				<Form.Item {...tailLayout}>
-					<Button type="primary" htmlType="submit">
+					<Button type="primary" htmlType="submit" data-umami-event="single-copybook">
 						生成字帖
 					</Button>
 				</Form.Item>
