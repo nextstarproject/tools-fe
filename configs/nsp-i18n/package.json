@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "i18next": "^23.11.2",
-    "react": "^18.2.0",
+    "i18next": "^23.12.3",
+    "react": "^18.3.1",
     "react-i18next": "^13.5.0"
   },
   "peerDependencies": {

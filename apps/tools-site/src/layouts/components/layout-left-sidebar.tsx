@@ -4,13 +4,13 @@ import { useCallback, useEffect, useState } from "react";
 import { useAppSelector } from "@project-self/store/store";
 import { selectGlobalState, selectLayoutState } from "@project-self/store/selector";
 import { MenuItem } from "@project-self/assets/consts/menus";
-import { ItemType } from "antd/es/menu/hooks/useItems";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { AntDesignOutlined } from "@ant-design/icons";
 import { Languages } from "nsp-i18n";
 import { defaultLanguage } from "@project-self/utils/default-language";
 import { DynamicAntIcon } from "@project-self/components/dynamic-icon/dynamic-icon";
 import { AHrefRelAllNo } from "@project-self/assets/consts/html-tag-consts";
+import { ItemType } from "antd/es/menu/interface";
 
 /**
  * @description 将请求的Menus列表转换为Antd的菜单
@@ -118,7 +118,7 @@ const LayoutLeftSidebar = (props: { prepare: boolean }) => {
 		<Layout.Sider
 			theme={globalState.theme.isDark ? "dark" : "light"}
 			width={256}
-			className={"h-full relative z-[100] monoFontFamily"}
+			className={"h-full relative z-[100]"}
 			style={{ backgroundColor: colorBgContainer }}
 			trigger={
 				<LayoutLeftSideBarTrigger
