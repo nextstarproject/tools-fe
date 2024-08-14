@@ -195,7 +195,6 @@ const SingleTab = () => {
 					rules={[{ required: true, message: "请输入字帖内容" }]}
 				>
 					<Input.TextArea
-						className={"scroll-common"}
 						allowClear
 						rows={16}
 						showCount={{
